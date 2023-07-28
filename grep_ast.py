@@ -182,7 +182,6 @@ class TreeContext:
         if not self.lines_of_interest:
             return
 
-        margin=5
 
         self.show_lines = set(self.lines_of_interest)
         for line in list(self.show_lines):
@@ -190,6 +189,7 @@ class TreeContext:
                 if self.scopes[line].intersection(self.scopes[new_line]):
                     self.show_lines.add(new_line)
 
+        margin=1
         self.show_lines.update(range(self.num_lines - margin - 1, self.num_lines))
 
         for i in set(self.show_lines):
@@ -207,6 +207,7 @@ class TreeContext:
                         self.add_parent_scopes(new_line)
 
         # add the top margin lines of the file
+        margin=3
         self.show_lines.update(range(margin))
         self.close_small_gaps()
 
