@@ -12,13 +12,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
     parser.add_argument("--no-pretty", action="store_true", help="disable pretty printing")
+    parser.add_argument("--encoding", default="utf8", help="file encoding")
     parser.add_argument("pat", help="the pattern to search for")
     parser.add_argument("filenames", nargs='+', help="the files to display")
     args = parser.parse_args()
 
     # Build the AST
     for filename in args.filenames:
-        with open(filename, "r") as file:
+        with open(filename, "r", encoding=args.encoding) as file:
             code = file.read()
 
         tg = TreeContext(filename, code, pretty=not args.no_pretty)
