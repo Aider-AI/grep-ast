@@ -30,7 +30,9 @@ def main():
         tg.add_context()
 
         print()
-        print(f"{filename}:")
+        if len(args.filenames) > 1:
+            print(f"{filename}:")
+
         tg.display()
 
 
