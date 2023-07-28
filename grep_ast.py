@@ -164,7 +164,7 @@ class TreeContext:
                 continue
 
             if i in self.lines_of_interest:
-                spacer = '█'
+                spacer = '\033[31m█\033[0m'
             else:
                 spacer = ' '
 
