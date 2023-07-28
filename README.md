@@ -1,11 +1,12 @@
 # grep-ast
 
-Grep soure code files, and see matching lines with
+Grep soure code files and see matching lines with
 useful context that show how they fit into the code.
 See which loops, functions, methods, classes, etc
 contain all the matching lines.
+Get a sense of what's inside a matched class.
 You see relevant code from every layer of the
-abstract syntax tree, above and below the matching lines.
+abstract syntax tree, above and below the matches.
 
 
 ## Usage
