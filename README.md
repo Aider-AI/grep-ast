@@ -30,9 +30,6 @@ $ python3 grep_ast.py encoding grep_ast.py
   1│#!/usr/bin/env python
   2│
   3│import argparse
-  4│import re
-  5│import os
-  6│
 ...⋮...
  10│def main():
  11│    # Parse command line arguments
@@ -42,22 +39,19 @@ $ python3 grep_ast.py encoding grep_ast.py
  15█    parser.add_argument("--encoding", default="utf8", help="file encoding")
  16│    parser.add_argument("--languages", action="store_true", help="print the parsers table")
 ...⋮...
- 28│    for filename in args.filenames:
- 29█        with open(filename, "r", encoding=args.encoding) as file:
- 30│            code = file.read()
- 31│
+ 32│    for filename in args.filenames:
+ 33█        with open(filename, "r", encoding=args.encoding) as file:
+ 34│            code = file.read()
+ 35│
 ...⋮...
- 34│        if not loi:
- 35│            continue
- 36│
- 37│        tg.add_lines_of_interest(loi)
+ 38│        if not loi:
+ 39│            continue
+ 40│
+ 41│        tg.add_lines_of_interest(loi)
 ...⋮...
- 44│        tg.display()
- 45│
+ 48│        tg.display()
+ 49│
 ...⋮...
-300│
-301│
-302│
-303│if __name__ == "__main__":
-304│    main()
+308│if __name__ == "__main__":
+309│    main()
 ```
