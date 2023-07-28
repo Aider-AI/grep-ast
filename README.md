@@ -20,6 +20,7 @@ python grep_ast.py [pattern] [filenames...]
 - `-i, --ignore-case`: Ignore case distinctions.
 - `--no-pretty`: Do not colorize matches.
 - `--languages`: Print out the supported file types.
+
 ## Example
 
 
@@ -36,22 +37,27 @@ $ python3 ./grep_ast.py enoding grep_ast.py
  10 def main():
  11     # Parse command line arguments
  12     parser = argparse.ArgumentParser()
-...░...
+ 13     parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
+ 14     parser.add_argument("--no-pretty", action="store_true", help="disable pretty printing")
  15█    parser.add_argument("--encoding", default="utf8", help="file encoding")
+ 16     parser.add_argument("--languages", action="store_true", help="print the parsers table")
 ...░...
- 21     for filename in args.filenames:
- 22█        with open(filename, "r", encoding=args.encoding) as file:
- 23             code = file.read()
- 24 
+ 28     for filename in args.filenames:
+ 29█        with open(filename, "r", encoding=args.encoding) as file:
+ 30             code = file.read()
+ 31 
 ...░...
- 30         tg.add_lines_of_interest(loi)
+ 34         if not loi:
+ 35             continue
+ 36 
+ 37         tg.add_lines_of_interest(loi)
 ...░...
- 37         tg.display()
- 38 
+ 44         tg.display()
+ 45 
 ...░...
-237 
-238 
-239 
-240 if __name__ == "__main__":
-241     main()
+298 
+299 
+300 
+301 if __name__ == "__main__":
+302     main()
 ```

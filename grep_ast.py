@@ -179,6 +179,11 @@ class TreeContext:
         margin=5
 
         self.show_lines = set(self.lines_of_interest)
+        for line in list(self.show_lines):
+            for new_line in [line-1,line+1]:
+                if self.scopes[line].intersection(self.scopes[new_line]):
+                    self.show_lines.add(new_line)
+
         self.show_lines.update(range(self.num_lines - margin - 1, self.num_lines))
 
         for i in set(self.show_lines):
@@ -202,7 +207,7 @@ class TreeContext:
     def sample_lines(self, i, last_line):
         filled_lines = sorted(i for i in range(i, last_line+1) if self.lines[i].strip())
         size = len(filled_lines)
-        if size < 30:
+        if size < 50:
             middle_line = filled_lines[size // 2]
             add = [middle_line]
         else:
