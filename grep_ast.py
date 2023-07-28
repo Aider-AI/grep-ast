@@ -18,6 +18,10 @@ def main():
     parser.add_argument("filenames", nargs='+', help="the files to display")
     args = parser.parse_args()
 
+    # If stdout is not a terminal, set pretty to False
+    if not os.isatty(1):
+        args.no_pretty = True
+
     # If --languages is provided, print the parsers table and exit
     if args.languages:
         for ext, lang in sorted(PARSERS.items()):
