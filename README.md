@@ -17,5 +17,5 @@ python grep_ast.py [pattern] [filenames] [-i]
 - `pattern`: The pattern to search for.
 - `filenames`: The files to search in.
 - `-i, --ignore-case`: Ignore case distinctions.
-
+- `--no-pretty`: Do not colorize matches.
 
