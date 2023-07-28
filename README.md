@@ -47,9 +47,9 @@ $ python3 grep_ast.py encoding grep_ast.py
  38│        if not loi:
  39│            continue
  40│
- 41│        tg.add_lines_of_interest(loi)
+ 41│        tc.add_lines_of_interest(loi)
 ...⋮...
- 48│        tg.display()
+ 48│        tc.display()
  49│
 ...⋮...
 308│if __name__ == "__main__":
