@@ -24,7 +24,7 @@ python grep_ast.py [pattern] [filenames] [-i]
 
 
 ```
-$ python3 ./grep_ast.py read grep_ast.py
+$ python3 ./grep_ast.py enoding grep_ast.py
 
   1 #!/usr/bin/env python
   2 
@@ -37,14 +37,20 @@ $ python3 ./grep_ast.py read grep_ast.py
  11     # Parse command line arguments
  12     parser = argparse.ArgumentParser()
 ...░...
- 20     for filename in args.filenames:
- 21         with open(filename, "r") as file:
- 22█            code = file.read()
- 23 
+ 15█    parser.add_argument("--encoding", default="utf8", help="file encoding")
 ...░...
-224 
+ 21     for filename in args.filenames:
+ 22█        with open(filename, "r", encoding=args.encoding) as file:
+ 23             code = file.read()
+ 24 
+...░...
+ 37         tg.display()
+ 38 
+ 39 
+...░...
 225 
 226 
-227 if __name__ == "__main__":
-228     main()
+227 
+228 if __name__ == "__main__":
+229     main()
 ```
