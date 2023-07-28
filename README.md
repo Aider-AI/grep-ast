@@ -1,6 +1,12 @@
 # Grep AST
 
-This repository contains a Python script for searching patterns in files using Abstract Syntax Trees (AST).
+Grep soure code files, and surround any lines that match with
+useful context that shows how they fit into the code.
+It's clear which loops, functions, methods, classes, etc
+contain all the matching lines.
+You see relevant code from every layer of the
+abstract syntax tree above and below the matching lines.
+
 
 ## Usage
 
@@ -8,22 +14,8 @@ This repository contains a Python script for searching patterns in files using A
 python grep_ast.py [pattern] [filenames] [-i]
 ```
 
-### Arguments
-
 - `pattern`: The pattern to search for.
 - `filenames`: The files to search in.
 - `-i, --ignore-case`: Ignore case distinctions.
 
-## Dependencies
 
-This script uses the following Python libraries:
-
-- argparse
-- re
-- os
-- tree_sitter_languages
-- dump
-
-## License
-
-This project is licensed under the MIT License.

@@ -10,9 +10,9 @@ from dump import dump
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
     parser.add_argument("pat", help="the pattern to search for")
     parser.add_argument("filenames", nargs='+', help="the files to display")
-    parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
     args = parser.parse_args()
 
     # Build the AST
@@ -55,7 +55,7 @@ class TreeContext:
         self.lines = code.splitlines()
         self.num_lines = len(self.lines) + 1
 
-        # grep() can story pretty lines here that highlight matches
+        # pretty lines, with highlighted matches
         self.output_lines = dict()
 
         # Which scopes is each line part of?
