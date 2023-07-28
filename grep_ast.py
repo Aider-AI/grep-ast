@@ -33,19 +33,19 @@ def main():
         with open(filename, "r", encoding=args.encoding) as file:
             code = file.read()
 
-        tg = TreeContext(filename, code, pretty=not args.no_pretty)
-        loi = tg.grep(args.pat, args.ignore_case)
+        tc = TreeContext(filename, code, pretty=not args.no_pretty)
+        loi = tc.grep(args.pat, args.ignore_case)
         if not loi:
             continue
 
-        tg.add_lines_of_interest(loi)
-        tg.add_context()
+        tc.add_lines_of_interest(loi)
+        tc.add_context()
 
         print()
         if len(args.filenames) > 1:
             print(f"{filename}:")
 
-        tg.display()
+        tc.display()
 
     print()
 
