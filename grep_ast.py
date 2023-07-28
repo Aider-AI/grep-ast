@@ -11,6 +11,7 @@ def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
+    parser.add_argument("--no-pretty", action="store_true", help="disable pretty printing")
     parser.add_argument("pat", help="the pattern to search for")
     parser.add_argument("filenames", nargs='+', help="the files to display")
     args = parser.parse_args()
@@ -20,7 +21,7 @@ def main():
         with open(filename, "r") as file:
             code = file.read()
 
-        tg = TreeContext(filename, code)
+        tg = TreeContext(filename, code, no_pretty=args.no_pretty)
         loi = tg.grep(args.pat, args.ignore_case)
         tg.add_lines_of_interest(loi)
         tg.add_context()
@@ -32,9 +33,10 @@ class TreeContext:
             filename,
             code,
             pretty=True,
+            no_pretty=False,
     ):
         self.filename = filename
-        self.pretty = pretty
+        self.pretty = not no_pretty
 
         # Mapping of file extensions to parsers
         parsers = {
