@@ -13,9 +13,16 @@ def main():
     parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
     parser.add_argument("--no-pretty", action="store_true", help="disable pretty printing")
     parser.add_argument("--encoding", default="utf8", help="file encoding")
+    parser.add_argument("--languages", action="store_true", help="print the parsers table")
     parser.add_argument("pat", help="the pattern to search for")
     parser.add_argument("filenames", nargs='+', help="the files to display")
     args = parser.parse_args()
+
+    # If --languages is provided, print the parsers table and exit
+    if args.languages:
+        for ext, lang in sorted(PARSERS.items()):
+            print(f"{ext}: {lang}")
+        exit(0)
 
     # Build the AST
     for filename in args.filenames:

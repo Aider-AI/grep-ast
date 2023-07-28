@@ -19,7 +19,7 @@ python grep_ast.py [pattern] [filenames] [-i]
 - `filenames`: The files to search in.
 - `-i, --ignore-case`: Ignore case distinctions.
 - `--no-pretty`: Do not colorize matches.
-
+- `--languages`: Print out the supported file types.
 ## Example
 
 
