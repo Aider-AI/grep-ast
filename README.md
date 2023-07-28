@@ -25,7 +25,7 @@ python grep_ast.py [pattern] [filenames...]
 
 
 ```
-$ python3 ./grep_ast.py enoding grep_ast.py
+$ python3 grep_ast.py enoding grep_ast.py
 
   1 #!/usr/bin/env python
   2 
