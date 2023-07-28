@@ -134,19 +134,25 @@ class TreeContext:
                 if size < 5:
                     self.show_lines.update(range(i, last_line+1))
                 else:
-                    steps = size//30
-                    if steps:
-                        step_size = size // steps
-                    else:
-                        step_size = size//2
-
-                    add = set([last_line] + list(range(i, last_line, step_size)))
+                    add = self.sample_lines(i, last_line)
                     for new_line in add:
+                        self.show_lines.add(new_line)
                         self.add_parent_scopes(new_line)
 
         # add the top margin lines of the file
         self.show_lines.update(range(margin))
         self.close_small_gaps()
+
+    def sample_lines(self, i, last_line):
+        filled_lines = sorted(i for i in range(i, last_line+1) if self.lines[i].strip())
+        size = len(filled_lines)
+        if size < 30:
+            middle_line = filled_lines[size // 2]
+            add = [middle_line]
+        else:
+            step = size // 30
+            add = [filled_lines[i] for i in range(0, size, step)]
+            add.append(filled_lines[-1])  # Ensure the last line is always included
 
     def close_small_gaps(self):
         # a "closing" operation on the integers in set. if i and i+2 are in there but i+1 is not, I want to add i+1
