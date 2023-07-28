@@ -27,37 +27,37 @@ python grep_ast.py [pattern] [filenames...]
 ```
 $ python3 grep_ast.py enoding grep_ast.py
 
-  1 #!/usr/bin/env python
-  2 
-  3 import argparse
-  4 import re
-  5 import os
-  6 
-...░...
- 10 def main():
- 11     # Parse command line arguments
- 12     parser = argparse.ArgumentParser()
- 13     parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
- 14     parser.add_argument("--no-pretty", action="store_true", help="disable pretty printing")
+  1│#!/usr/bin/env python
+  2│
+  3│import argparse
+  4│import re
+  5│import os
+  6│
+...⋮...
+ 10│def main():
+ 11│    # Parse command line arguments
+ 12│    parser = argparse.ArgumentParser()
+ 13│    parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
+ 14│    parser.add_argument("--no-pretty", action="store_true", help="disable pretty printing")
  15█    parser.add_argument("--encoding", default="utf8", help="file encoding")
- 16     parser.add_argument("--languages", action="store_true", help="print the parsers table")
-...░...
- 28     for filename in args.filenames:
+ 16│    parser.add_argument("--languages", action="store_true", help="print the parsers table")
+...⋮...
+ 28│    for filename in args.filenames:
  29█        with open(filename, "r", encoding=args.encoding) as file:
- 30             code = file.read()
- 31 
-...░...
- 34         if not loi:
- 35             continue
- 36 
- 37         tg.add_lines_of_interest(loi)
-...░...
- 44         tg.display()
- 45 
-...░...
-298 
-299 
-300 
-301 if __name__ == "__main__":
-302     main()
+ 30│            code = file.read()
+ 31│
+...⋮...
+ 34│        if not loi:
+ 35│            continue
+ 36│
+ 37│        tg.add_lines_of_interest(loi)
+...⋮...
+ 44│        tg.display()
+ 45│
+...⋮...
+300│
+301│
+302│
+303│if __name__ == "__main__":
+304│    main()
 ```

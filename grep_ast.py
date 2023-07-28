@@ -43,6 +43,8 @@ def main():
 
         tg.display()
 
+    print()
+
 # Mapping of file extensions to parsers
 PARSERS = {
     ".py": "python",
@@ -246,7 +248,7 @@ class TreeContext:
         for i, line in enumerate(self.lines):
             if i not in self.show_lines:
                 if dots:
-                    print('...░...')
+                    print('...⋮...')
                     dots = False
                 continue
 
@@ -255,7 +257,7 @@ class TreeContext:
                 if self.pretty:
                     spacer = f'\033[31m{spacer}\033[0m'
             else:
-                spacer = ' '
+                spacer = '│'
 
             print(f"{i+1:3}{spacer}{self.output_lines.get(i, line)}")
             dots = True
