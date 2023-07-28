@@ -21,7 +21,7 @@ def main():
         with open(filename, "r") as file:
             code = file.read()
 
-        tg = TreeContext(filename, code, no_pretty=args.no_pretty)
+        tg = TreeContext(filename, code, pretty=not args.no_pretty)
         loi = tg.grep(args.pat, args.ignore_case)
         tg.add_lines_of_interest(loi)
         tg.add_context()
@@ -32,11 +32,10 @@ class TreeContext:
             self,
             filename,
             code,
-            pretty=True,
-            no_pretty=False,
+            pretty=False,
     ):
         self.filename = filename
-        self.pretty = not no_pretty
+        self.pretty = pretty
 
         # Mapping of file extensions to parsers
         parsers = {
@@ -166,7 +165,7 @@ class TreeContext:
                 continue
 
             if i in self.lines_of_interest:
-                spacer = '\033[31m█\033[0m'
+                spacer = '█'
                 if self.pretty:
                     spacer = f'\033[31m{spacer}\033[0m'
             else:
