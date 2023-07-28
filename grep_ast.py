@@ -23,9 +23,16 @@ def main():
 
         tg = TreeContext(filename, code, pretty=not args.no_pretty)
         loi = tg.grep(args.pat, args.ignore_case)
+        if not loi:
+            continue
+
         tg.add_lines_of_interest(loi)
         tg.add_context()
+
+        print()
+        print(f"{filename}:")
         tg.display()
+
 
 class TreeContext:
     def __init__(
@@ -124,7 +131,13 @@ class TreeContext:
                 if size < 5:
                     self.show_lines.update(range(i, last_line+1))
                 else:
-                    add = set([last_line] + list(range(i, last_line, 30)))
+                    steps = size//30
+                    if steps:
+                        step_size = size // steps
+                    else:
+                        step_size = size//2
+
+                    add = set([last_line] + list(range(i, last_line, step_size)))
                     for new_line in add:
                         self.add_parent_scopes(new_line)
 
@@ -152,9 +165,6 @@ class TreeContext:
     def display(self):
         if not self.show_lines:
             return
-
-        print()
-        print(f"{self.filename}:")
 
         dots = False
         for i, line in enumerate(self.lines):
