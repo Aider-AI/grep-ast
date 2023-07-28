@@ -163,7 +163,10 @@ class TreeContext:
                     dots = False
                 continue
 
-            print(f"{i+1:3}█{self.output_lines.get(i, line)}")
+            if i in self.lines_of_interest:
+                print(f"{i+1:3}➜{self.output_lines.get(i, line)}")
+            else:
+                print(f"{i+1:3}█{self.output_lines.get(i, line)}")
             dots = True
 
     def get_last_line_of_scope(self, i):
