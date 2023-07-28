@@ -207,7 +207,7 @@ class TreeContext:
         self.close_small_gaps()
 
     def sample_lines(self, i, last_line):
-        filled_lines = sorted(i for i in range(i, last_line+1) if self.lines[i].strip())
+        filled_lines = sorted(i for i in range(i, last_line+1) if i < len(self.lines) and self.lines[i].strip())
         size = len(filled_lines)
         if size < 50:
             middle_line = filled_lines[size // 2]
