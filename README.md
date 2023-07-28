@@ -12,7 +12,7 @@ abstract syntax tree, above and below the matches.
 ## Usage
 
 ```bash
-python grep_ast.py [pattern] [filenames] [-i]
+python grep_ast.py [pattern] [filenames...]
 ```
 
 - `pattern`: The pattern to search for.
