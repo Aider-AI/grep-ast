@@ -36,6 +36,64 @@ def main():
 
         tg.display()
 
+# Mapping of file extensions to parsers
+PARSERS = {
+    ".py": "python",
+    ".js": "javascript",
+    ".go": "go",
+    ".md": "markdown",
+    ".erl": "erlang",
+    ".lua": "lua",
+    ".el": "elisp",
+    ".mk": "make",
+    ".make": "make",
+    ".dockerfile": "dockerfile",
+    ".mod": "go-mod",
+    ".ex": "elixir",
+    ".exs": "elixir",
+    ".elm": "elm",
+    ".kt": "kotlin",
+    ".pl": "perl",
+    ".pm": "perl",
+    ".m": "objc",
+    ".h": "objc",
+    ".sql": "sql",
+    ".r": "r",
+    ".dot": "dot",
+    ".hh": "hack",
+    ".hck": "hack",
+    ".lisp": "commonlisp",
+    ".cl": "commonlisp",
+    ".sh": "bash",
+    ".bash": "bash",
+    ".c": "c",
+    ".cs": "c-sharp",
+    ".cpp": "cpp",
+    ".css": "css",
+    ".hs": "haskell",
+    ".html": "html",
+    ".htm": "html",
+    ".java": "java",
+    ".jsdoc": "jsdoc",
+    ".json": "json",
+    ".jl": "julia",
+    ".ml": "ocaml",
+    ".mli": "ocaml",
+    ".php": "php",
+    ".ql": "ql",
+    ".regex": "regex",
+    ".rb": "ruby",
+    ".rs": "rust",
+    ".scala": "scala",
+    ".sqlite": "sqlite",
+    ".db": "sqlite",
+    ".toml": "toml",
+    ".tsq": "tsq",
+    ".ts": "typescript",
+    ".rst": "rst",
+    ".hcl": "hcl",
+}
+
 
 class TreeContext:
     def __init__(
@@ -47,69 +105,11 @@ class TreeContext:
         self.filename = filename
         self.pretty = pretty
 
-        # Mapping of file extensions to parsers
-        parsers = {
-            ".py": "python",
-            ".js": "javascript",
-            ".go": "go",
-            ".md": "markdown",
-            ".erl": "erlang",
-            ".lua": "lua",
-            ".el": "elisp",
-            ".mk": "make",
-            ".make": "make",
-            ".dockerfile": "dockerfile",
-            ".mod": "go-mod",
-            ".ex": "elixir",
-            ".exs": "elixir",
-            ".elm": "elm",
-            ".kt": "kotlin",
-            ".pl": "perl",
-            ".pm": "perl",
-            ".m": "objc",
-            ".h": "objc",
-            ".sql": "sql",
-            ".r": "r",
-            ".dot": "dot",
-            ".hh": "hack",
-            ".hck": "hack",
-            ".lisp": "commonlisp",
-            ".cl": "commonlisp",
-            ".sh": "bash",
-            ".bash": "bash",
-            ".c": "c",
-            ".cs": "c-sharp",
-            ".cpp": "cpp",
-            ".css": "css",
-            ".hs": "haskell",
-            ".html": "html",
-            ".htm": "html",
-            ".java": "java",
-            ".jsdoc": "jsdoc",
-            ".json": "json",
-            ".jl": "julia",
-            ".ml": "ocaml",
-            ".mli": "ocaml",
-            ".php": "php",
-            ".ql": "ql",
-            ".regex": "regex",
-            ".rb": "ruby",
-            ".rs": "rust",
-            ".scala": "scala",
-            ".sqlite": "sqlite",
-            ".db": "sqlite",
-            ".toml": "toml",
-            ".tsq": "tsq",
-            ".ts": "typescript",
-            ".rst": "rst",
-            ".hcl": "hcl",
-        }
-
         # Extract file extension
         file_extension = os.path.splitext(self.filename)[1]
 
         # Get parser based on file extension
-        parser = get_parser(parsers.get(file_extension, "python"))
+        parser = get_parser(PARSERS.get(file_extension, "python"))
         tree = parser.parse(bytes(code, "utf8"))
 
         self.lines = code.splitlines()
