@@ -165,6 +165,8 @@ class TreeContext:
 
             if i in self.lines_of_interest:
                 spacer = '\033[31m█\033[0m'
+                if self.pretty:
+                    spacer = f'\033[31m{spacer}\033[0m'
             else:
                 spacer = ' '
 
