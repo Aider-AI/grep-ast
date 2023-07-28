@@ -44,13 +44,14 @@ $ python3 ./grep_ast.py enoding grep_ast.py
  23             code = file.read()
  24 
 ...░...
+ 30         tg.add_lines_of_interest(loi)
+...░...
  37         tg.display()
  38 
- 39 
 ...░...
-225 
-226 
-227 
-228 if __name__ == "__main__":
-229     main()
+237 
+238 
+239 
+240 if __name__ == "__main__":
+241     main()
 ```

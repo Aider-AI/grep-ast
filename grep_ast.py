@@ -152,7 +152,11 @@ class TreeContext:
         else:
             step = size // 30
             add = [filled_lines[i] for i in range(0, size, step)]
-            add.append(filled_lines[-1])  # Ensure the last line is always included
+
+        add.append(filled_lines[0])
+        add.append(filled_lines[-1])  # Ensure the last line is always included
+
+        return set(add)
 
     def close_small_gaps(self):
         # a "closing" operation on the integers in set. if i and i+2 are in there but i+1 is not, I want to add i+1
@@ -165,7 +169,9 @@ class TreeContext:
 
         # pick up adjacent blank lines
         for i, line in enumerate(self.lines):
-            if i in closed_show and i < self.num_lines-2 and not self.lines[i+1].strip():
+            if i not in closed_show:
+                continue
+            if self.lines[i].strip() and i < self.num_lines-2 and not self.lines[i+1].strip():
                 closed_show.add(i+1)
 
         self.show_lines = closed_show
