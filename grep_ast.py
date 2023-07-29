@@ -7,15 +7,22 @@ import os
 from tree_sitter_languages import get_parser
 from dump import dump
 
+
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
-    parser.add_argument("--no-pretty", action="store_true", help="disable pretty printing")
+    parser.add_argument(
+        "-i", "--ignore-case", action="store_true", help="ignore case distinctions"
+    )
+    parser.add_argument(
+        "--no-pretty", action="store_true", help="disable pretty printing"
+    )
     parser.add_argument("--encoding", default="utf8", help="file encoding")
-    parser.add_argument("--languages", action="store_true", help="print the parsers table")
+    parser.add_argument(
+        "--languages", action="store_true", help="print the parsers table"
+    )
     parser.add_argument("pat", help="the pattern to search for")
-    parser.add_argument("filenames", nargs='+', help="the files to display")
+    parser.add_argument("filenames", nargs="+", help="the files to display")
     parser.add_argument("--verbose", action="store_true", help="enable verbose output")
     args = parser.parse_args()
 
@@ -34,7 +41,9 @@ def main():
         with open(filename, "r", encoding=args.encoding) as file:
             code = file.read()
 
-        tc = TreeContext(filename, code, pretty=not args.no_pretty, verbose=args.verbose)
+        tc = TreeContext(
+            filename, code, pretty=not args.no_pretty, verbose=args.verbose
+        )
         loi = tc.grep(args.pat, args.ignore_case)
         if not loi:
             continue
@@ -49,6 +58,7 @@ def main():
         tc.display()
 
     print()
+
 
 # Mapping of file extensions to parsers
 PARSERS = {
@@ -111,11 +121,11 @@ PARSERS = {
 
 class TreeContext:
     def __init__(
-            self,
-            filename,
-            code,
-            pretty=False,
-            verbose=False,
+        self,
+        filename,
+        code,
+        pretty=False,
+        verbose=False,
     ):
         self.filename = filename
         self.pretty = pretty
@@ -148,18 +158,17 @@ class TreeContext:
 
         if self.verbose:
             scope_width = max(
-                len(str(set(self.scopes[i])))
-                for i in range(self.num_lines-1)
+                len(str(set(self.scopes[i]))) for i in range(self.num_lines - 1)
             )
         for i in range(self.num_lines):
             header = sorted(self.header[i])
-            if self.verbose and i < self.num_lines-1:
+            if self.verbose and i < self.num_lines - 1:
                 scopes = str(sorted(set(self.scopes[i])))
                 print(f"{scopes.ljust(scope_width)}", i, self.lines[i])
 
             if len(header) > 1:
                 size, head_start, head_end = header[0]
-                if size>10:
+                if size > 10:
                     head_end = head_start + 10
             else:
                 head_start = i
@@ -173,12 +182,16 @@ class TreeContext:
         return
 
     def grep(self, pat, ignore_case):
-
         found = set()
         for i, line in enumerate(self.lines):
             if re.search(pat, line, re.IGNORECASE if ignore_case else 0):
                 if self.pretty:
-                    highlighted_line = re.sub(pat, lambda match: f'\033[1;31m{match.group()}\033[0m', line, flags=re.IGNORECASE if ignore_case else 0)
+                    highlighted_line = re.sub(
+                        pat,
+                        lambda match: f"\033[1;31m{match.group()}\033[0m",
+                        line,
+                        flags=re.IGNORECASE if ignore_case else 0,
+                    )
                     self.output_lines[i] = highlighted_line
                 found.add(i)
         return found
@@ -190,10 +203,9 @@ class TreeContext:
         if not self.lines_of_interest:
             return
 
-
         self.show_lines = set(self.lines_of_interest)
         for line in list(self.show_lines):
-            for new_line in [line-1,line+1]:
+            for new_line in [line - 1, line + 1]:
                 if self.scopes[line].intersection(self.scopes[new_line]):
                     self.show_lines.add(new_line)
 
@@ -209,7 +221,7 @@ class TreeContext:
             self.add_child_context(i)
 
         # add the top margin lines of the file
-        margin=3
+        margin = 3
         self.show_lines.update(range(margin))
         self.close_small_gaps()
 
@@ -220,7 +232,7 @@ class TreeContext:
         last_line = self.get_last_line_of_scope(i)
         size = last_line - i
         if size < 5:
-            self.show_lines.update(range(i, last_line+1))
+            self.show_lines.update(range(i, last_line + 1))
             return
 
         children = []
@@ -229,8 +241,8 @@ class TreeContext:
 
         children = sorted(
             children,
-            key = lambda node: node.end_point[0] - node.start_point[0],
-            reverse = True,
+            key=lambda node: node.end_point[0] - node.start_point[0],
+            reverse=True,
         )
 
         currently_showing = len(self.show_lines)
@@ -252,10 +264,7 @@ class TreeContext:
         return children
 
     def get_last_line_of_scope(self, i):
-        last_line = max(
-            node.end_point[0]
-            for node in self.nodes[i]
-        )
+        last_line = max(node.end_point[0] for node in self.nodes[i])
         return last_line
 
     def close_small_gaps(self):
@@ -264,18 +273,21 @@ class TreeContext:
         closed_show = set(self.show_lines)
         sorted_show = sorted(self.show_lines)
         for i in range(len(sorted_show) - 1):
-            if sorted_show[i+1] - sorted_show[i] == 2:
+            if sorted_show[i + 1] - sorted_show[i] == 2:
                 closed_show.add(sorted_show[i] + 1)
 
         # pick up adjacent blank lines
         for i, line in enumerate(self.lines):
             if i not in closed_show:
                 continue
-            if self.lines[i].strip() and i < self.num_lines-2 and not self.lines[i+1].strip():
-                closed_show.add(i+1)
+            if (
+                self.lines[i].strip()
+                and i < self.num_lines - 2
+                and not self.lines[i + 1].strip()
+            ):
+                closed_show.add(i + 1)
 
         self.show_lines = closed_show
-
 
     def display(self):
         if not self.show_lines:
@@ -283,22 +295,22 @@ class TreeContext:
 
         if self.pretty:
             # reset
-            print('\033[0m')
+            print("\033[0m")
 
         dots = False
         for i, line in enumerate(self.lines):
             if i not in self.show_lines:
                 if dots:
-                    print('...⋮...')
+                    print("...⋮...")
                     dots = False
                 continue
 
             if i in self.lines_of_interest:
-                spacer = '█'
+                spacer = "█"
                 if self.pretty:
-                    spacer = f'\033[31m{spacer}\033[0m'
+                    spacer = f"\033[31m{spacer}\033[0m"
             else:
-                spacer = '│'
+                spacer = "│"
 
             print(f"{i+1:3}{spacer}{self.output_lines.get(i, line)}")
             dots = True
@@ -306,7 +318,7 @@ class TreeContext:
     def add_parent_scopes(self, i):
         for line_num in self.scopes[i]:
             head_start, head_end = self.header[line_num]
-            self.show_lines.update(range(head_start, head_end+1))
+            self.show_lines.update(range(head_start, head_end + 1))
 
     def walk_tree(self, node, depth=0):
         start = node.start_point
@@ -318,22 +330,25 @@ class TreeContext:
 
         self.nodes[start_line].append(node)
 
-        #dump(start_line, end_line, node.text)
+        # dump(start_line, end_line, node.text)
         if self.verbose:
-            print('   ' * depth, node.type, f"{start_line}-{end_line}={size+1}", self.lines[start_line])
+            print(
+                "   " * depth,
+                node.type,
+                f"{start_line}-{end_line}={size+1}",
+                self.lines[start_line],
+            )
 
         if size:
             self.header[start_line].append((size, start_line, end_line))
 
-        for i in range(start_line, end_line+1):
+        for i in range(start_line, end_line + 1):
             self.scopes[i].add(start_line)
 
         for child in node.children:
-            self.walk_tree(child, depth+1)
+            self.walk_tree(child, depth + 1)
 
         return start_line, end_line
-
-
 
 
 if __name__ == "__main__":
