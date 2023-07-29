@@ -6,7 +6,7 @@ import re
 
 from tree_sitter_languages import get_parser
 
-from dump import dump
+from .dump import dump  # noqa: F401
 
 
 def main():
@@ -259,7 +259,8 @@ class TreeContext:
         return last_line
 
     def close_small_gaps(self):
-        # a "closing" operation on the integers in set. if i and i+2 are in there but i+1 is not, I want to add i+1
+        # a "closing" operation on the integers in set.
+        # if i and i+2 are in there but i+1 is not, I want to add i+1
         # Create a new set for the "closed" lines
         closed_show = set(self.show_lines)
         sorted_show = sorted(self.show_lines)
