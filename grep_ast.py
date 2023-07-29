@@ -298,7 +298,8 @@ class TreeContext:
         self.nodes[start_line].append(node)
 
         #dump(start_line, end_line, node.text)
-        #print('   ' * depth, size+1, node.type)
+        if self.verbose:
+            print('   ' * depth, node.type, f"{start_line}-{end_line}={size+1}", self.lines[start_line])
 
         if size:
             self.header[start_line].append((size, start_line, end_line))
