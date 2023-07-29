@@ -12,16 +12,10 @@ from dump import dump
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-i", "--ignore-case", action="store_true", help="ignore case distinctions"
-    )
-    parser.add_argument(
-        "--no-pretty", action="store_true", help="disable pretty printing"
-    )
+    parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
+    parser.add_argument("--no-pretty", action="store_true", help="disable pretty printing")
     parser.add_argument("--encoding", default="utf8", help="file encoding")
-    parser.add_argument(
-        "--languages", action="store_true", help="print the parsers table"
-    )
+    parser.add_argument("--languages", action="store_true", help="print the parsers table")
     parser.add_argument("pat", help="the pattern to search for")
     parser.add_argument("filenames", nargs="+", help="the files to display")
     parser.add_argument("--verbose", action="store_true", help="enable verbose output")
@@ -42,9 +36,7 @@ def main():
         with open(filename, "r", encoding=args.encoding) as file:
             code = file.read()
 
-        tc = TreeContext(
-            filename, code, pretty=not args.no_pretty, verbose=args.verbose
-        )
+        tc = TreeContext(filename, code, pretty=not args.no_pretty, verbose=args.verbose)
         loi = tc.grep(args.pat, args.ignore_case)
         if not loi:
             continue
@@ -158,9 +150,7 @@ class TreeContext:
         self.walk_tree(root_node)
 
         if self.verbose:
-            scope_width = max(
-                len(str(set(self.scopes[i]))) for i in range(self.num_lines - 1)
-            )
+            scope_width = max(len(str(set(self.scopes[i]))) for i in range(self.num_lines - 1))
         for i in range(self.num_lines):
             header = sorted(self.header[i])
             if self.verbose and i < self.num_lines - 1:
@@ -281,11 +271,7 @@ class TreeContext:
         for i, line in enumerate(self.lines):
             if i not in closed_show:
                 continue
-            if (
-                self.lines[i].strip()
-                and i < self.num_lines - 2
-                and not self.lines[i + 1].strip()
-            ):
+            if self.lines[i].strip() and i < self.num_lines - 2 and not self.lines[i + 1].strip():
                 closed_show.add(i + 1)
 
         self.show_lines = closed_show
