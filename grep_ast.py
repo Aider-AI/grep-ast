@@ -105,7 +105,7 @@ class TreeContext:
                     head_end = head_start + 10
             else:
                 head_start = i
-                head_end = i
+                head_end = i + 1
 
             self.header[i] = head_start, head_end
 
