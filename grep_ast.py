@@ -146,11 +146,16 @@ class TreeContext:
         root_node = tree.root_node
         self.walk_tree(root_node)
 
+        if self.verbose:
+            scope_width = max(
+                len(str(set(self.scopes[i])))
+                for i in range(self.num_lines-1)
+            )
         for i in range(self.num_lines):
             header = sorted(self.header[i])
             if self.verbose and i < self.num_lines-1:
-                print(header, sorted(set(self.scopes[i])))
-                print(i, self.lines[i])
+                scopes = str(sorted(set(self.scopes[i])))
+                print(f"{scopes.ljust(scope_width)}", i, self.lines[i])
 
             if len(header) > 1:
                 size, head_start, head_end = header[0]
@@ -293,7 +298,7 @@ class TreeContext:
         self.nodes[start_line].append(node)
 
         #dump(start_line, end_line, node.text)
-        print('   ' * depth, size+1, node.type)
+        #print('   ' * depth, size+1, node.type)
 
         if size:
             self.header[start_line].append((size, start_line, end_line))
