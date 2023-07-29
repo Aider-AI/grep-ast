@@ -198,9 +198,9 @@ class TreeContext:
                     self.show_lines.add(new_line)
 
         # add the bottom line (plus parent context)
-        margin=1
-        for i in range(self.num_lines - margin - 1, self.num_lines):
-            self.add_parent_scopes(i)
+        bottom_line = self.num_lines - 2
+        self.show_lines.add(bottom_line)
+        self.add_parent_scopes(bottom_line)
 
         for i in set(self.lines_of_interest):
             self.add_parent_scopes(i)
