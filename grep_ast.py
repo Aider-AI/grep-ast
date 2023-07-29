@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
 import argparse
-import re
 import os
+import re
 
 from tree_sitter_languages import get_parser
+
 from dump import dump
 
 
