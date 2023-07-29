@@ -202,22 +202,24 @@ class TreeContext:
 
         for i in set(self.show_lines):
             self.add_parent_scopes(i)
-
-            if self.nodes[i]:
-                last_line = self.get_last_line_of_scope(i)
-                size = last_line - i
-                if size < 5:
-                    self.show_lines.update(range(i, last_line+1))
-                else:
-                    add = self.sample_lines(i, last_line)
-                    for new_line in add:
-                        self.show_lines.add(new_line)
-                        self.add_parent_scopes(new_line)
+            self.add_child_context(i)
 
         # add the top margin lines of the file
         margin=3
         self.show_lines.update(range(margin))
         self.close_small_gaps()
+
+    def add_child_context(self, i):
+        if self.nodes[i]:
+            last_line = self.get_last_line_of_scope(i)
+            size = last_line - i
+            if size < 5:
+                self.show_lines.update(range(i, last_line+1))
+            else:
+                add = self.sample_lines(i, last_line)
+                for new_line in add:
+                    self.show_lines.add(new_line)
+                    self.add_parent_scopes(new_line)
 
     def sample_lines(self, i, last_line):
         filled_lines = sorted(i for i in range(i, last_line+1) if i < len(self.lines) and self.lines[i].strip())
