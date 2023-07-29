@@ -16,6 +16,7 @@ def main():
     parser.add_argument("--languages", action="store_true", help="print the parsers table")
     parser.add_argument("pat", help="the pattern to search for")
     parser.add_argument("filenames", nargs='+', help="the files to display")
+    parser.add_argument("--verbose", action="store_true", help="enable verbose output")
     args = parser.parse_args()
 
     # If stdout is not a terminal, set pretty to False
@@ -33,7 +34,7 @@ def main():
         with open(filename, "r", encoding=args.encoding) as file:
             code = file.read()
 
-        tc = TreeContext(filename, code, pretty=not args.no_pretty)
+        tc = TreeContext(filename, code, pretty=not args.no_pretty, verbose=args.verbose)
         loi = tc.grep(args.pat, args.ignore_case)
         if not loi:
             continue
@@ -114,9 +115,11 @@ class TreeContext:
             filename,
             code,
             pretty=False,
+            verbose=False,
     ):
         self.filename = filename
         self.pretty = pretty
+        self.verbose = verbose
 
         # Extract file extension
         file_extension = os.path.splitext(self.filename)[1]
@@ -145,7 +148,7 @@ class TreeContext:
 
         for i in range(self.num_lines):
             header = sorted(self.header[i])
-            if False and i < self.num_lines-1:
+            if self.verbose and i < self.num_lines-1:
                 print(header, sorted(set(self.scopes[i])))
                 print(i, self.lines[i])
 
@@ -279,7 +282,7 @@ class TreeContext:
             head_start, head_end = self.header[line_num]
             self.show_lines.update(range(head_start, head_end+1))
 
-    def walk_tree(self, node):
+    def walk_tree(self, node, depth=0):
         start = node.start_point
         end = node.end_point
 
@@ -290,6 +293,7 @@ class TreeContext:
         self.nodes[start_line].append(node)
 
         #dump(start_line, end_line, node.text)
+        print('   ' * depth, size+1, node.type)
 
         if size:
             self.header[start_line].append((size, start_line, end_line))
@@ -298,7 +302,7 @@ class TreeContext:
             self.scopes[i].add(start_line)
 
         for child in node.children:
-            self.walk_tree(child)
+            self.walk_tree(child, depth+1)
 
         return start_line, end_line
 
