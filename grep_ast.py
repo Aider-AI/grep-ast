@@ -7,6 +7,7 @@ import re
 from tree_sitter_languages import get_parser
 
 from dump import dump  # noqa: F401
+from parsers import PARSERS
 
 
 def main():
@@ -51,65 +52,6 @@ def main():
         tc.display()
 
     print()
-
-
-# Mapping of file extensions to parsers
-PARSERS = {
-    ".py": "python",
-    ".js": "javascript",
-    ".go": "go",
-    ".md": "markdown",
-    ".erl": "erlang",
-    ".lua": "lua",
-    ".el": "elisp",
-    ".mk": "make",
-    ".make": "make",
-    ".dockerfile": "dockerfile",
-    ".mod": "go-mod",
-    ".ex": "elixir",
-    ".exs": "elixir",
-    ".elm": "elm",
-    ".kt": "kotlin",
-    ".pl": "perl",
-    ".pm": "perl",
-    ".m": "objc",
-    ".h": "objc",
-    ".sql": "sql",
-    ".r": "r",
-    ".dot": "dot",
-    ".hh": "hack",
-    ".hck": "hack",
-    ".lisp": "commonlisp",
-    ".cl": "commonlisp",
-    ".sh": "bash",
-    ".bash": "bash",
-    ".c": "c",
-    ".cs": "c-sharp",
-    ".cpp": "cpp",
-    ".css": "css",
-    ".hs": "haskell",
-    ".html": "html",
-    ".htm": "html",
-    ".java": "java",
-    ".jsdoc": "jsdoc",
-    ".json": "json",
-    ".jl": "julia",
-    ".ml": "ocaml",
-    ".mli": "ocaml",
-    ".php": "php",
-    ".ql": "ql",
-    ".regex": "regex",
-    ".rb": "ruby",
-    ".rs": "rust",
-    ".scala": "scala",
-    ".sqlite": "sqlite",
-    ".db": "sqlite",
-    ".toml": "toml",
-    ".tsq": "tsq",
-    ".ts": "typescript",
-    ".rst": "rst",
-    ".hcl": "hcl",
-}
 
 
 class TreeContext:
