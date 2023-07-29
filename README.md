@@ -40,11 +40,11 @@ $ python3 grep_ast.py encoding grep_ast.py
  15│    parser = argparse.ArgumentParser()
  16│    parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
  17│    parser.add_argument("--no-pretty", action="store_true", help="disable pretty printing")
- 18<span style="color: #aa0000">█</span>    parser.add_argument("--<span style="font-weight: bold; color: #aa0000">encoding</span>", default="utf8", help="file <span style="font-weight: bold; color: #aa0000">encoding</span>")
+ 18█    parser.add_argument("--encoding", default="utf8", help="file encoding")
  19│    parser.add_argument("--languages", action="store_true", help="print the parsers table")
 ...⋮...
  36│    for filename in args.filenames:
- 37<span style="color: #aa0000">█</span>        with open(filename, "r", <span style="font-weight: bold; color: #aa0000">encoding</span>=args.<span style="font-weight: bold; color: #aa0000">encoding</span>) as file:
+ 37█        with open(filename, "r", encoding=args.encoding) as file:
  38│            code = file.read()
  39│
  40│        tc = TreeContext(filename, code, pretty=not args.no_pretty, verbose=args.verbose)
@@ -53,7 +53,7 @@ $ python3 grep_ast.py encoding grep_ast.py
  43│            continue
  44│
 ...⋮...
- 49│        if len(args.filenames) &gt; 1:
+ 49│        if len(args.filenames) > 1:
  50│            print(f"{filename}:")
  51│
 ...⋮...
