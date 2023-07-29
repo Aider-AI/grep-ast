@@ -259,6 +259,10 @@ class TreeContext:
         if not self.show_lines:
             return
 
+        if self.pretty:
+            # reset
+            print('\033[0m')
+
         dots = False
         for i, line in enumerate(self.lines):
             if i not in self.show_lines:
