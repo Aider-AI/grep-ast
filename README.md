@@ -39,19 +39,19 @@ $ python3 grep_ast.py encoding grep_ast.py
  15█    parser.add_argument("--encoding", default="utf8", help="file encoding")
  16│    parser.add_argument("--languages", action="store_true", help="print the parsers table")
 ...⋮...
- 32│    for filename in args.filenames:
- 33█        with open(filename, "r", encoding=args.encoding) as file:
- 34│            code = file.read()
- 35│
+ 33│    for filename in args.filenames:
+ 34█        with open(filename, "r", encoding=args.encoding) as file:
+ 35│            code = file.read()
+ 36│
+ 37│        tc = TreeContext(filename, code, pretty=not args.no_pretty, verbose=args.verbose)
+ 38│        loi = tc.grep(args.pat, args.ignore_case)
+ 39│        if not loi:
+ 40│            continue
+ 41│
+ 42│        tc.add_lines_of_interest(loi)
 ...⋮...
- 38│        if not loi:
- 39│            continue
- 40│
- 41│        tc.add_lines_of_interest(loi)
+ 46│        if len(args.filenames) > 1:
 ...⋮...
- 48│        tc.display()
- 49│
-...⋮...
-308│if __name__ == "__main__":
-309│    main()
+339│if __name__ == "__main__":
+340│    main()
 ```
