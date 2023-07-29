@@ -8,6 +8,9 @@ Get a sense of what's inside a matched class.
 You see relevant code from every layer of the
 abstract syntax tree, above and below the matches.
 
+Grep-AST is built with [tree-sitter](https://tree-sitter.github.io/tree-sitter/) and
+[tree-sitter-languages](https://github.com/grantjenks/py-tree-sitter-languages).
+So it supports a lot of popular [code languages](https://github.com/grantjenks/py-tree-sitter-languages).
 
 ## Usage
 
@@ -23,6 +26,7 @@ python grep_ast.py [pattern] [filenames...]
 
 ## Example
 
+Here we search for **"encoding"** in the source to this tool:
 
 ```
 $ python3 grep_ast.py encoding grep_ast.py
