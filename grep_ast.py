@@ -197,11 +197,15 @@ class TreeContext:
                 if self.scopes[line].intersection(self.scopes[new_line]):
                     self.show_lines.add(new_line)
 
+        # add the bottom line (plus parent context)
         margin=1
-        self.show_lines.update(range(self.num_lines - margin - 1, self.num_lines))
-
-        for i in set(self.show_lines):
+        for i in range(self.num_lines - margin - 1, self.num_lines):
             self.add_parent_scopes(i)
+
+        for i in set(self.lines_of_interest):
+            self.add_parent_scopes(i)
+
+        for i in set(self.lines_of_interest):
             self.add_child_context(i)
 
         # add the top margin lines of the file
@@ -210,31 +214,49 @@ class TreeContext:
         self.close_small_gaps()
 
     def add_child_context(self, i):
-        if self.nodes[i]:
-            last_line = self.get_last_line_of_scope(i)
-            size = last_line - i
-            if size < 5:
-                self.show_lines.update(range(i, last_line+1))
-            else:
-                add = self.sample_lines(i, last_line)
-                for new_line in add:
-                    self.show_lines.add(new_line)
-                    self.add_parent_scopes(new_line)
+        if not self.nodes[i]:
+            return
 
-    def sample_lines(self, i, last_line):
-        filled_lines = sorted(i for i in range(i, last_line+1) if i < len(self.lines) and self.lines[i].strip())
-        size = len(filled_lines)
-        if size < 50:
-            middle_line = filled_lines[size // 2]
-            add = [middle_line]
-        else:
-            step = size // 30
-            add = [filled_lines[i] for i in range(0, size, step)]
+        last_line = self.get_last_line_of_scope(i)
+        size = last_line - i
+        if size < 5:
+            self.show_lines.update(range(i, last_line+1))
+            return
 
-        add.append(filled_lines[0])
-        add.append(filled_lines[-1])  # Ensure the last line is always included
+        children = []
+        for node in self.nodes[i]:
+            children += self.find_all_children(node)
 
-        return set(add)
+        children = sorted(
+            children,
+            key = lambda node: node.end_point[0] - node.start_point[0],
+            reverse = True,
+        )
+
+        currently_showing = len(self.show_lines)
+        max_to_show = 25
+        min_to_show = 5
+        percent_to_show = 0.10
+        max_to_show = max(min(size * percent_to_show, max_to_show), min_to_show)
+
+        for child in children:
+            if len(self.show_lines) > currently_showing + max_to_show:
+                break
+            child_start_line = child.start_point[0]
+            self.add_parent_scopes(child_start_line)
+
+    def find_all_children(self, node):
+        children = [node]
+        for child in node.children:
+            children += self.find_all_children(child)
+        return children
+
+    def get_last_line_of_scope(self, i):
+        last_line = max(
+            node.end_point[0]
+            for node in self.nodes[i]
+        )
+        return last_line
 
     def close_small_gaps(self):
         # a "closing" operation on the integers in set. if i and i+2 are in there but i+1 is not, I want to add i+1
@@ -280,13 +302,6 @@ class TreeContext:
 
             print(f"{i+1:3}{spacer}{self.output_lines.get(i, line)}")
             dots = True
-
-    def get_last_line_of_scope(self, i):
-        last_line = max(
-            node.end_point[0]
-            for node in self.nodes[i]
-        )
-        return last_line
 
     def add_parent_scopes(self, i):
         for line_num in self.scopes[i]:
