@@ -28,35 +28,6 @@ python grep_ast.py [pattern] [filenames...]
 
 Here we search for **"encoding"** in the source to this tool:
 
-```
-$ python3 grep_ast.py encoding grep_ast.py
-
-  1│#!/usr/bin/env python
-  2│
-  3│import argparse
-...⋮...
- 13│def main():
- 14│    # Parse command line arguments
- 15│    parser = argparse.ArgumentParser()
- 16│    parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
- 17│    parser.add_argument("--no-pretty", action="store_true", help="disable pretty printing")
- 18█    parser.add_argument("--encoding", default="utf8", help="file encoding")
- 19│    parser.add_argument("--languages", action="store_true", help="print the parsers table")
-...⋮...
- 36│    for filename in args.filenames:
- 37█        with open(filename, "r", encoding=args.encoding) as file:
- 38│            code = file.read()
- 39│
- 40│        tc = TreeContext(filename, code, pretty=not args.no_pretty, verbose=args.verbose)
- 41│        loi = tc.grep(args.pat, args.ignore_case)
- 42│        if not loi:
- 43│            continue
- 44│
-...⋮...
- 49│        if len(args.filenames) > 1:
- 50│            print(f"{filename}:")
- 51│
-...⋮...
-284│if __name__ == "__main__":
-285│    main()
-```
+<p align="center">
+  <img src="assets/screenshot.svg" alt="aider screencast">
+</p>
