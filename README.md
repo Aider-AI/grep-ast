@@ -12,12 +12,18 @@ Grep-AST is built with [tree-sitter](https://tree-sitter.github.io/tree-sitter/)
 [tree-sitter-languages](https://github.com/grantjenks/py-tree-sitter-languages).
 So it supports a lot of popular [code languages](https://github.com/paul-gauthier/grep-ast/blob/main/parsers.py).
 
+## Install
+
+```bash
+python -m pip install git+https://github.com/paul-gauthier/grep-ast.git
+```
+
 ## Usage
 
 Basic usage:
 
 ```bash
-python grep_ast.py [pattern] [filenames...]
+grep-ast [pattern] [filenames...]
 ```
 
 Full options list:
@@ -45,11 +51,11 @@ options:
 Here we search for **"encoding"** in the source to this tool:
 
 <p align="center">
-  <img src="assets/screenshot.svg" alt="aider screencast">
+  <img src="assets/screenshot-encoding.svg" alt="aider screencast">
 </p>
 
 Here we search for **"TreeContext"** in the source to this tool:
 
 <p align="center">
-  <img src="assets/screenshot2.svg" alt="aider screencast">
+  <img src="assets/screenshot-TreeContext.svg" alt="aider screencast">
 </p>
