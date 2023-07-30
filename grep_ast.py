@@ -3,6 +3,7 @@
 import argparse
 import os
 import re
+import sys
 
 from tree_sitter_languages import get_parser
 
@@ -33,10 +34,10 @@ def main():
     if args.languages:
         for ext, lang in sorted(PARSERS.items()):
             print(f"{ext}: {lang}")
-        exit(0)
+        return
     elif not args.pat or not args.filenames:
         print("Error: the following arguments are required: pat, filenames")
-        exit(1)
+        return 1
 
     # Build the AST
     for filename in args.filenames:
@@ -288,4 +289,5 @@ class TreeContext:
 
 
 if __name__ == "__main__":
-    main()
+    res = main()
+    sys.exit(res)
