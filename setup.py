@@ -1,5 +1,8 @@
 from setuptools import setup, find_packages
 
+with open('requirements.txt') as f:
+    requirements = f.read().splitlines()
+
 setup(
     name='grep-ast',
     version='0.1.0',
@@ -7,9 +10,7 @@ setup(
     author='Your Name',
     author_email='your.email@example.com',
     packages=find_packages(),
-    install_requires=[
-        # Add your project dependencies here
-    ],
+    install_requires=requirements,
     entry_points={
         'console_scripts': [
             'grep-ast=grep_ast:main',
