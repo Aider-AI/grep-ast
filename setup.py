@@ -7,8 +7,6 @@ setup(
     name='grep-ast',
     version='0.1.0',
     description='A tool to grep through the AST of a source file',
-    author='Your Name',
-    author_email='your.email@example.com',
     packages=find_packages(),
     install_requires=requirements,
     entry_points={
