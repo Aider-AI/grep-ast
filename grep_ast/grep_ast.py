@@ -143,6 +143,8 @@ class TreeContext:
         if not self.lines_of_interest:
             return
 
+        self.done_parent_scopes = set()
+
         self.show_lines = set(self.lines_of_interest)
         for line in list(self.show_lines):
             for new_line in [line - 1, line + 1]:
@@ -253,9 +255,16 @@ class TreeContext:
             dots = True
 
     def add_parent_scopes(self, i):
+        if i in self.done_parent_scopes:
+            return
+        self.done_parent_scopes.add(i)
+
         for line_num in self.scopes[i]:
             head_start, head_end = self.header[line_num]
             self.show_lines.update(range(head_start, head_end + 1))
+
+            last_line = self.get_last_line_of_scope(line_num)
+            self.add_parent_scopes(last_line)
 
     def walk_tree(self, node, depth=0):
         start = node.start_point
