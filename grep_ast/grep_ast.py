@@ -16,13 +16,13 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("pat", nargs="?", help="the pattern to search for")
     parser.add_argument("filenames", nargs="*", help="the files to display")
+    parser.add_argument("--encoding", default="utf8", help="file encoding")
+    parser.add_argument("--languages", action="store_true", help="show supported languages")
     parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
     parser.add_argument("--color", action="store_true", help="force color printing", default=None)
     parser.add_argument(
         "--no-color", action="store_false", help="disable color printing", dest="color"
     )
-    parser.add_argument("--encoding", default="utf8", help="file encoding")
-    parser.add_argument("--languages", action="store_true", help="print the parsers table")
     parser.add_argument("--verbose", action="store_true", help="enable verbose output")
     args = parser.parse_args()
 
