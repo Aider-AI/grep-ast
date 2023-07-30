@@ -50,12 +50,8 @@ options:
 
 Here we search for **"encoding"** in the source to this tool:
 
-<p align="center">
-  <img src="assets/screenshot-encoding.svg" alt="aider screencast">
-</p>
+<img src="assets/screenshot-encoding.svg" alt="aider screencast">
 
 Here we search for **"TreeContext"** in the source to this tool:
 
-<p align="center">
-  <img src="assets/screenshot-TreeContext.svg" alt="aider screencast">
-</p>
+<img src="assets/screenshot-TreeContext.svg" alt="aider screencast">
