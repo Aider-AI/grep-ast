@@ -10,7 +10,7 @@ abstract syntax tree, above and below the matches.
 
 Grep-AST is built with [tree-sitter](https://tree-sitter.github.io/tree-sitter/) and
 [tree-sitter-languages](https://github.com/grantjenks/py-tree-sitter-languages).
-So it supports a lot of popular [code languages](https://github.com/paul-gauthier/grep-ast/blob/main/parsers.py).
+So it supports a lot of popular [code languages](https://github.com/paul-gauthier/grep-ast/blob/main/grep_ast/parsers.py).
 
 ## Install
 
