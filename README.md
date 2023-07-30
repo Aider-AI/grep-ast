@@ -4,7 +4,7 @@ Grep soure code files and see matching lines with
 useful context that show how they fit into the code.
 See the loops, functions, methods, classes, etc
 that contain all the matching lines.
-Get a sense of what's inside a matched class.
+Get a sense of what's inside a matched class or function definition.
 You see relevant code from every layer of the
 abstract syntax tree, above and below the matches.
 
