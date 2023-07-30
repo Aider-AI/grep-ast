@@ -14,7 +14,10 @@ def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
-    parser.add_argument("--no-pretty", action="store_true", help="disable pretty printing")
+    parser.add_argument("--color", action="store_true", help="force color printing", default=None)
+    parser.add_argument(
+        "--no-color", action="store_false", help="disable color printing", dest="color"
+    )
     parser.add_argument("--encoding", default="utf8", help="file encoding")
     parser.add_argument("--languages", action="store_true", help="print the parsers table")
     parser.add_argument("pat", help="the pattern to search for")
@@ -22,9 +25,9 @@ def main():
     parser.add_argument("--verbose", action="store_true", help="enable verbose output")
     args = parser.parse_args()
 
-    # If stdout is not a terminal, set pretty to False
-    if not os.isatty(1):
-        args.no_pretty = True
+    # If stdout is not a terminal, set color to False
+    if args.color is None:
+        args.color = os.isatty(1)
 
     # If --languages is provided, print the parsers table and exit
     if args.languages:
@@ -37,7 +40,7 @@ def main():
         with open(filename, "r", encoding=args.encoding) as file:
             code = file.read()
 
-        tc = TreeContext(filename, code, pretty=not args.no_pretty, verbose=args.verbose)
+        tc = TreeContext(filename, code, color=args.color, verbose=args.verbose)
         loi = tc.grep(args.pat, args.ignore_case)
         if not loi:
             continue
@@ -59,11 +62,11 @@ class TreeContext:
         self,
         filename,
         code,
-        pretty=False,
+        color=False,
         verbose=False,
     ):
         self.filename = filename
-        self.pretty = pretty
+        self.color = color
         self.verbose = verbose
 
         # Extract file extension
@@ -76,7 +79,7 @@ class TreeContext:
         self.lines = code.splitlines()
         self.num_lines = len(self.lines) + 1
 
-        # pretty lines, with highlighted matches
+        # color lines, with highlighted matches
         self.output_lines = dict()
 
         # Which scopes is each line part of?
@@ -118,7 +121,7 @@ class TreeContext:
         found = set()
         for i, line in enumerate(self.lines):
             if re.search(pat, line, re.IGNORECASE if ignore_case else 0):
-                if self.pretty:
+                if self.color:
                     highlighted_line = re.sub(
                         pat,
                         lambda match: f"\033[1;31m{match.group()}\033[0m",
@@ -223,7 +226,7 @@ class TreeContext:
         if not self.show_lines:
             return
 
-        if self.pretty:
+        if self.color:
             # reset
             print("\033[0m")
 
@@ -237,7 +240,7 @@ class TreeContext:
 
             if i in self.lines_of_interest:
                 spacer = "█"
-                if self.pretty:
+                if self.color:
                     spacer = f"\033[31m{spacer}\033[0m"
             else:
                 spacer = "│"
