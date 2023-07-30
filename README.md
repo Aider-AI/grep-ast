@@ -24,10 +24,16 @@ python grep_ast.py [pattern] [filenames...]
 - `--no-pretty`: Do not colorize matches.
 - `--languages`: Print out the supported file types.
 
-## Example
+## Examples
 
 Here we search for **"encoding"** in the source to this tool:
 
 <p align="center">
   <img src="assets/screenshot.svg" alt="aider screencast">
+</p>
+
+Here we search for **"TreeContext"** in the source to this tool:
+
+<p align="center">
+  <img src="assets/screenshot2.svg" alt="aider screencast">
 </p>
