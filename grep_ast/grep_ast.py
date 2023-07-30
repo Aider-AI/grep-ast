@@ -5,10 +5,10 @@ import os
 import re
 import sys
 
-from dump import dump  # noqa: F401
 from tree_sitter_languages import get_parser
 
-from parsers import PARSERS
+from .dump import dump  # noqa: F401
+from .parsers import PARSERS
 
 
 def main():
