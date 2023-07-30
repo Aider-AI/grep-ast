@@ -14,15 +14,31 @@ So it supports a lot of popular [code languages](https://github.com/paul-gauthie
 
 ## Usage
 
+Basic usage:
+
 ```bash
 python grep_ast.py [pattern] [filenames...]
 ```
 
-- `pattern`: The pattern to search for.
-- `filenames`: The files to search in.
-- `-i, --ignore-case`: Ignore case distinctions.
-- `--no-pretty`: Do not colorize matches.
-- `--languages`: Print out the supported file types.
+Full options list:
+
+```
+usage: grep_ast.py [-h] [-i] [--color] [--no-color] [--encoding ENCODING] [--languages] [--verbose]
+                   [pat] [filenames ...]
+
+positional arguments:
+  pat                  the pattern to search for
+  filenames            the files to display
+
+options:
+  -h, --help           show this help message and exit
+  -i, --ignore-case    ignore case distinctions
+  --color              force color printing
+  --no-color           disable color printing
+  --encoding ENCODING  file encoding
+  --languages          print the parsers table
+  --verbose            enable verbose output
+```
 
 ## Examples
 
