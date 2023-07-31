@@ -1,3 +1,5 @@
+import os
+
 # Updated mapping of file extensions to parsers
 PARSERS = {
     ".py": "python",
@@ -48,3 +50,9 @@ PARSERS = {
     ".ts": "typescript",
     ".yaml": "yaml",
 }
+
+
+def filename_to_lang(filename):
+    file_extension = os.path.splitext(filename)[1]
+    lang = PARSERS.get(file_extension)
+    return lang

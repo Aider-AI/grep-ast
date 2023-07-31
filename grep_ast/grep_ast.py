@@ -8,7 +8,7 @@ import sys
 from tree_sitter_languages import get_parser
 
 from .dump import dump  # noqa: F401
-from .parsers import PARSERS
+from .parsers import filename_to_lang
 
 
 def main():
@@ -73,11 +73,10 @@ class TreeContext:
         self.color = color
         self.verbose = verbose
 
-        # Extract file extension
-        file_extension = os.path.splitext(self.filename)[1]
+        lang = filename_to_lang(filename)
 
         # Get parser based on file extension
-        parser = get_parser(PARSERS.get(file_extension, "python"))
+        parser = get_parser(lang)
         tree = parser.parse(bytes(code, "utf8"))
 
         self.lines = code.splitlines()
@@ -277,11 +276,16 @@ class TreeContext:
         self.nodes[start_line].append(node)
 
         # dump(start_line, end_line, node.text)
-        if self.verbose:
+        if self.verbose and node.is_named:
+            '''
+            for k in dir(node):
+                print(k, getattr(node, k))
+            '''
             print(
                 "   " * depth,
                 node.type,
                 f"{start_line}-{end_line}={size+1}",
+                node.text.splitlines()[0],
                 self.lines[start_line],
             )
 
