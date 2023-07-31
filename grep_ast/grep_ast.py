@@ -40,25 +40,38 @@ def main():
         return 1
 
     # Build the AST
-    for filename in args.filenames:
-        with open(filename, "r", encoding=args.encoding) as file:
-            code = file.read()
+def process_files(filenames, args):
+    from .parsers import PARSERS  # import PARSERS here to avoid circular import
+    for filename in filenames:
+        if os.path.isdir(filename):
+            # If filename is a directory, recursively process the files in it
+            for root, dirs, files in os.walk(filename):
+                process_files([os.path.join(root, file) for file in files], args)
+        else:
+            # If filename is a file, process it if its extension is in PARSERS
+            _, ext = os.path.splitext(filename)
+            if ext in PARSERS:
+                with open(filename, "r", encoding=args.encoding) as file:
+                    code = file.read()
 
-        tc = TreeContext(filename, code, color=args.color, verbose=args.verbose)
-        loi = tc.grep(args.pat, args.ignore_case)
-        if not loi:
-            continue
+                tc = TreeContext(filename, code, color=args.color, verbose=args.verbose)
+                loi = tc.grep(args.pat, args.ignore_case)
+                if not loi:
+                    continue
 
-        tc.add_lines_of_interest(loi)
-        tc.add_context()
+                tc.add_lines_of_interest(loi)
+                tc.add_context()
 
-        print()
-        if len(args.filenames) > 1:
-            print(f"{filename}:")
+                print()
+                if len(filenames) > 1:
+                    print(f"{filename}:")
 
-        tc.display()
+                tc.display()
 
     print()
+
+# Replace the loop in the main function with a call to process_files
+process_files(args.filenames, args)
 
 
 class TreeContext:
