@@ -8,7 +8,7 @@ import sys
 from tree_sitter_languages import get_parser
 
 from .dump import dump  # noqa: F401
-from .parsers import filename_to_lang
+from .parsers import PARSERS, filename_to_lang
 
 
 def main():
@@ -39,39 +39,43 @@ def main():
         print("Error: the following arguments are required: pat, filenames")
         return 1
 
-    # Build the AST
+    # Replace the loop in the main function with a call to process_files
+    process_files(args.filenames, args)
+
+
 def process_files(filenames, args):
-    from .parsers import PARSERS  # import PARSERS here to avoid circular import
     for filename in filenames:
         if os.path.isdir(filename):
             # If filename is a directory, recursively process the files in it
             for root, dirs, files in os.walk(filename):
                 process_files([os.path.join(root, file) for file in files], args)
-        else:
-            # If filename is a file, process it if its extension is in PARSERS
-            _, ext = os.path.splitext(filename)
-            if ext in PARSERS:
-                with open(filename, "r", encoding=args.encoding) as file:
-                    code = file.read()
+            continue
 
-                tc = TreeContext(filename, code, color=args.color, verbose=args.verbose)
-                loi = tc.grep(args.pat, args.ignore_case)
-                if not loi:
-                    continue
+        try:
+            with open(filename, "r", encoding=args.encoding) as file:
+                code = file.read()
+        except UnicodeDecodeError:
+            continue
 
-                tc.add_lines_of_interest(loi)
-                tc.add_context()
+        try:
+            tc = TreeContext(filename, code, color=args.color, verbose=args.verbose)
+        except ValueError:
+            continue
 
-                print()
-                if len(filenames) > 1:
-                    print(f"{filename}:")
+        loi = tc.grep(args.pat, args.ignore_case)
+        if not loi:
+            continue
 
-                tc.display()
+        tc.add_lines_of_interest(loi)
+        tc.add_context()
 
-    print()
+        print()
+        if len(filenames) > 1:
+            print(f"{filename}:")
 
-# Replace the loop in the main function with a call to process_files
-process_files(args.filenames, args)
+        tc.display()
+
+        print()
 
 
 class TreeContext:
@@ -87,6 +91,8 @@ class TreeContext:
         self.verbose = verbose
 
         lang = filename_to_lang(filename)
+        if not lang:
+            raise ValueError(f"Unknown language for {filename}")
 
         # Get parser based on file extension
         parser = get_parser(lang)
@@ -266,17 +272,21 @@ class TreeContext:
             print(f"{i+1:3}{spacer}{self.output_lines.get(i, line)}")
             dots = True
 
-    def add_parent_scopes(self, i):
-        if i in self.done_parent_scopes:
+    def add_parent_scopes(self, i, minimal=False):
+        if (i, minimal) in self.done_parent_scopes:
             return
-        self.done_parent_scopes.add(i)
+        self.done_parent_scopes.add((i, minimal))
 
         for line_num in self.scopes[i]:
             head_start, head_end = self.header[line_num]
-            self.show_lines.update(range(head_start, head_end + 1))
+            if minimal:
+                end = head_start + 1
+            else:
+                end = head_end + 1
+            self.show_lines.update(range(head_start, end))
 
             last_line = self.get_last_line_of_scope(line_num)
-            self.add_parent_scopes(last_line)
+            self.add_parent_scopes(last_line, minimal=True)
 
     def walk_tree(self, node, depth=0):
         start = node.start_point
@@ -290,10 +300,10 @@ class TreeContext:
 
         # dump(start_line, end_line, node.text)
         if self.verbose and node.is_named:
-            '''
+            """
             for k in dir(node):
                 print(k, getattr(node, k))
-            '''
+            """
             print(
                 "   " * depth,
                 node.type,
