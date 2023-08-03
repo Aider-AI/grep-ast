@@ -24,6 +24,7 @@ def main():
         "--no-color", action="store_false", help="disable color printing", dest="color"
     )
     parser.add_argument("--verbose", action="store_true", help="enable verbose output")
+    parser.add_argument("-n", "--line-number", action="store_true", help="display line numbers")
     args = parser.parse_args()
 
     # If stdout is not a terminal, set color to False
@@ -58,7 +59,7 @@ def process_files(filenames, args):
             continue
 
         try:
-            tc = TreeContext(filename, code, color=args.color, verbose=args.verbose)
+            tc = TreeContext(filename, code, color=args.color, verbose=args.verbose, line_number=args.line_number)
         except ValueError:
             continue
 
@@ -85,10 +86,12 @@ class TreeContext:
         code,
         color=False,
         verbose=False,
+        line_number=False,
     ):
         self.filename = filename
         self.color = color
         self.verbose = verbose
+        self.line_number = line_number
 
         lang = filename_to_lang(filename)
         if not lang:
@@ -269,7 +272,10 @@ class TreeContext:
             else:
                 spacer = "│"
 
-            print(f"{i+1:3}{spacer}{self.output_lines.get(i, line)}")
+            if self.line_number:
+        print(f"{i+1:3}{spacer}{self.output_lines.get(i, line)}")
+    else:
+        print(f"{spacer}{self.output_lines.get(i, line)}")
             dots = True
 
     def add_parent_scopes(self, i):
