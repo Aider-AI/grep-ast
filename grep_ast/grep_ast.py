@@ -272,21 +272,17 @@ class TreeContext:
             print(f"{i+1:3}{spacer}{self.output_lines.get(i, line)}")
             dots = True
 
-    def add_parent_scopes(self, i, minimal=False):
-        if (i, minimal) in self.done_parent_scopes:
+    def add_parent_scopes(self, i):
+        if i in self.done_parent_scopes:
             return
-        self.done_parent_scopes.add((i, minimal))
+        self.done_parent_scopes.add(i)
 
         for line_num in self.scopes[i]:
             head_start, head_end = self.header[line_num]
-            if minimal:
-                end = head_start + 1
-            else:
-                end = head_end + 1
-            self.show_lines.update(range(head_start, end))
+            self.show_lines.update(range(head_start, head_end))
 
             last_line = self.get_last_line_of_scope(line_num)
-            self.add_parent_scopes(last_line, minimal=True)
+            self.add_parent_scopes(last_line)
 
     def walk_tree(self, node, depth=0):
         start = node.start_point
