@@ -263,7 +263,10 @@ class TreeContext:
         for i, line in enumerate(self.lines):
             if i not in self.show_lines:
                 if dots:
-                    print("...⋮...")
+                    if self.line_number:
+                        print("...⋮...")
+                    else:
+                        print("⋮...")
                     dots = False
                 continue
 
