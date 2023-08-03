@@ -59,7 +59,9 @@ def process_files(filenames, args):
             continue
 
         try:
-            tc = TreeContext(filename, code, color=args.color, verbose=args.verbose, line_number=args.line_number)
+            tc = TreeContext(
+                filename, code, color=args.color, verbose=args.verbose, line_number=args.line_number
+            )
         except ValueError:
             continue
 
@@ -272,10 +274,11 @@ class TreeContext:
             else:
                 spacer = "│"
 
+            output = f"{spacer}{self.output_lines.get(i, line)}"
             if self.line_number:
-        print(f"{i+1:3}{spacer}{self.output_lines.get(i, line)}")
-    else:
-        print(f"{spacer}{self.output_lines.get(i, line)}")
+                output = f"{i+1:3}" + output
+            print(output)
+
             dots = True
 
     def add_parent_scopes(self, i):
