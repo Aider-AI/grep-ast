@@ -14,8 +14,8 @@ from .parsers import PARSERS, filename_to_lang
 def main():
     # Parse command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("pat", nargs="?", help="the pattern to search for")
-    parser.add_argument("filenames", nargs="*", help="the files to display")
+    parser.add_argument("pattern", nargs="?", help="the pattern to search for")
+    parser.add_argument("filenames", nargs="*", help="the files to display", default=".")
     parser.add_argument("--encoding", default="utf8", help="file encoding")
     parser.add_argument("--languages", action="store_true", help="show supported languages")
     parser.add_argument("-i", "--ignore-case", action="store_true", help="ignore case distinctions")
@@ -36,8 +36,8 @@ def main():
         for ext, lang in sorted(PARSERS.items()):
             print(f"{ext}: {lang}")
         return
-    elif not args.pat or not args.filenames:
-        print("Error: the following arguments are required: pat, filenames")
+    elif not args.pattern:
+        print("Please provide a pattern to search for")
         return 1
 
     # Replace the loop in the main function with a call to process_files
@@ -65,7 +65,7 @@ def process_files(filenames, args):
         except ValueError:
             continue
 
-        loi = tc.grep(args.pat, args.ignore_case)
+        loi = tc.grep(args.pattern, args.ignore_case)
         if not loi:
             continue
 
