@@ -30,7 +30,7 @@ PARSERS = {
     ".kt": "kotlin",
     ".lua": "lua",
     ".mk": "make",
-    ".md": "markdown",
+    # ".md": "markdown",
     ".m": "objc",
     ".ml": "ocaml",
     ".pl": "perl",
