@@ -260,20 +260,21 @@ class TreeContext:
 
     def display(self):
         if not self.show_lines:
-            return
+            return ""
 
+        output = ""
         if self.color:
             # reset
-            print("\033[0m")
+            output += "\033[0m\n"
 
         dots = False
         for i, line in enumerate(self.lines):
             if i not in self.show_lines:
                 if dots:
                     if self.line_number:
-                        print("...⋮...")
+                        output += "...⋮...\n"
                     else:
-                        print("⋮...")
+                        output += "⋮...\n"
                     dots = False
                 continue
 
@@ -284,12 +285,14 @@ class TreeContext:
             else:
                 spacer = "│"
 
-            output = f"{spacer}{self.output_lines.get(i, line)}"
+            line_output = f"{spacer}{self.output_lines.get(i, line)}"
             if self.line_number:
-                output = f"{i+1:3}" + output
-            print(output)
+                line_output = f"{i+1:3}" + line_output
+            output += line_output + "\n"
 
             dots = True
+
+        return output
 
     def add_parent_scopes(self, i):
         if i in self.done_parent_scopes:
