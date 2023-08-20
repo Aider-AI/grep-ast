@@ -89,11 +89,16 @@ class TreeContext:
         color=False,
         verbose=False,
         line_number=False,
+        parent_context=True,
+        child_context=True,
     ):
         self.filename = filename
         self.color = color
         self.verbose = verbose
         self.line_number = line_number
+
+        self.parent_context = parent_context
+        self.child_context = child_context
 
         lang = filename_to_lang(filename)
         if not lang:
@@ -179,11 +184,13 @@ class TreeContext:
         self.show_lines.add(bottom_line)
         self.add_parent_scopes(bottom_line)
 
-        for i in set(self.lines_of_interest):
-            self.add_parent_scopes(i)
+        if self.parent_context:
+            for i in set(self.lines_of_interest):
+                self.add_parent_scopes(i)
 
-        for i in set(self.lines_of_interest):
-            self.add_child_context(i)
+        if self.child_context:
+            for i in set(self.lines_of_interest):
+                self.add_child_context(i)
 
         # add the top margin lines of the file
         margin = 3
