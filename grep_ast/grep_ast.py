@@ -91,11 +91,21 @@ class TreeContext:
         line_number=False,
         parent_context=True,
         child_context=True,
+        last_line=True,
+        margin=3,
+        mark_lois=True,
+        header_max=10,
+        loi_pad=1,
     ):
         self.filename = filename
         self.color = color
         self.verbose = verbose
         self.line_number = line_number
+        self.last_line = last_line
+        self.margin = margin
+        self.mark_lois = mark_lois
+        self.header_max = header_max
+        self.loi_pad = loi_pad
 
         self.parent_context = parent_context
         self.child_context = child_context
@@ -136,8 +146,8 @@ class TreeContext:
 
             if len(header) > 1:
                 size, head_start, head_end = header[0]
-                if size > 10:
-                    head_end = head_start + 10
+                if size > self.header_max:
+                    head_end = head_start + self.header_max
             else:
                 head_start = i
                 head_end = i + 1
@@ -174,15 +184,18 @@ class TreeContext:
         self.done_parent_scopes = set()
 
         self.show_lines = set(self.lines_of_interest)
-        for line in list(self.show_lines):
-            for new_line in [line - 1, line + 1]:
-                if self.scopes[line].intersection(self.scopes[new_line]):
-                    self.show_lines.add(new_line)
 
-        # add the bottom line (plus parent context)
-        bottom_line = self.num_lines - 2
-        self.show_lines.add(bottom_line)
-        self.add_parent_scopes(bottom_line)
+        if self.loi_pad:
+            for line in list(self.show_lines):
+                for new_line in [line - self.loi_pad, line + self.loi_pad]:
+                    if self.scopes[line].intersection(self.scopes[new_line]):
+                        self.show_lines.add(new_line)
+
+        if self.last_line:
+            # add the bottom line (plus parent context)
+            bottom_line = self.num_lines - 2
+            self.show_lines.add(bottom_line)
+            self.add_parent_scopes(bottom_line)
 
         if self.parent_context:
             for i in set(self.lines_of_interest):
@@ -193,8 +206,9 @@ class TreeContext:
                 self.add_child_context(i)
 
         # add the top margin lines of the file
-        margin = 3
-        self.show_lines.update(range(margin))
+        if self.margin:
+            self.show_lines.update(range(self.margin))
+
         self.close_small_gaps()
 
     def add_child_context(self, i):
@@ -259,6 +273,9 @@ class TreeContext:
         self.show_lines = closed_show
 
     def display(self):
+        print(self.format())
+
+    def format(self):
         if not self.show_lines:
             return ""
 
@@ -267,7 +284,7 @@ class TreeContext:
             # reset
             output += "\033[0m\n"
 
-        dots = False
+        dots = not (0 in self.show_lines)
         for i, line in enumerate(self.lines):
             if i not in self.show_lines:
                 if dots:
@@ -278,7 +295,7 @@ class TreeContext:
                     dots = False
                 continue
 
-            if i in self.lines_of_interest:
+            if i in self.lines_of_interest and self.mark_lois:
                 spacer = "█"
                 if self.color:
                     spacer = f"\033[31m{spacer}\033[0m"
@@ -303,8 +320,9 @@ class TreeContext:
             head_start, head_end = self.header[line_num]
             self.show_lines.update(range(head_start, head_end))
 
-            last_line = self.get_last_line_of_scope(line_num)
-            self.add_parent_scopes(last_line)
+            if self.last_line:
+                last_line = self.get_last_line_of_scope(line_num)
+                self.add_parent_scopes(last_line)
 
     def walk_tree(self, node, depth=0):
         start = node.start_point
