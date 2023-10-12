@@ -86,7 +86,7 @@ def process_filename(filename, args):
     print()
     print(f"{filename}:")
 
-    tc.display()
+    print(tc.display(), end="")
 
     print()
 
