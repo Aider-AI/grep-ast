@@ -4,6 +4,7 @@ import argparse
 import os
 import re
 import sys
+from pathlib import Path
 
 from tree_sitter_languages import get_parser
 
@@ -40,45 +41,54 @@ def main():
         print("Please provide a pattern to search for")
         return 1
 
-    # Replace the loop in the main function with a call to process_files
-    process_files(args.filenames, args)
+    for fname in enumerate_files(args.filenames):
+        process_filename(fname, args)
 
 
-def process_files(filenames, args):
-    for filename in filenames:
-        if os.path.isdir(filename):
-            # If filename is a directory, recursively process the files in it
-            for root, dirs, files in os.walk(filename):
-                process_files([os.path.join(root, file) for file in files], args)
+def enumerate_files(fnames):
+    for fname in fnames:
+        fname = Path(fname)
+
+        # oddly, Path('.').name == "" so we will recurse it
+        if fname.name.startswith("."):
             continue
 
-        try:
-            with open(filename, "r", encoding=args.encoding) as file:
-                code = file.read()
-        except UnicodeDecodeError:
+        if fname.is_file():
+            yield str(fname)
             continue
 
-        try:
-            tc = TreeContext(
-                filename, code, color=args.color, verbose=args.verbose, line_number=args.line_number
-            )
-        except ValueError:
-            continue
+        if fname.is_dir():
+            for sub_fnames in enumerate_files(fname.iterdir()):
+                yield sub_fnames
 
-        loi = tc.grep(args.pattern, args.ignore_case)
-        if not loi:
-            continue
 
-        tc.add_lines_of_interest(loi)
-        tc.add_context()
+def process_filename(filename, args):
+    try:
+        with open(filename, "r", encoding=args.encoding) as file:
+            code = file.read()
+    except UnicodeDecodeError:
+        return
 
-        print()
-        if len(filenames) > 1:
-            print(f"{filename}:")
+    try:
+        tc = TreeContext(
+            filename, code, color=args.color, verbose=args.verbose, line_number=args.line_number
+        )
+    except ValueError:
+        return
 
-        tc.display()
+    loi = tc.grep(args.pattern, args.ignore_case)
+    if not loi:
+        return
 
-        print()
+    tc.add_lines_of_interest(loi)
+    tc.add_context()
+
+    print()
+    print(f"{filename}:")
+
+    tc.display()
+
+    print()
 
 
 class TreeContext:
