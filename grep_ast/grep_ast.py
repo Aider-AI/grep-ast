@@ -86,7 +86,7 @@ def process_filename(filename, args):
     print()
     print(f"{filename}:")
 
-    print(tc.display(), end="")
+    print(tc.format(), end="")
 
     print()
 
@@ -281,9 +281,6 @@ class TreeContext:
                 closed_show.add(i + 1)
 
         self.show_lines = closed_show
-
-    def display(self):
-        print(self.format())
 
     def format(self):
         if not self.show_lines:
