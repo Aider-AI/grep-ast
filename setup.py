@@ -11,7 +11,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name="grep-ast",
-    version="0.1.0",
+    version="0.0.1",
     description="A tool to grep through the AST of a source file",
     url="https://github.com/paul-gauthier/grep-ast",
     long_description=long_description,
