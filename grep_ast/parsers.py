@@ -30,7 +30,7 @@ PARSERS = {
     ".kt": "kotlin",
     ".lua": "lua",
     ".mk": "make",
-    # ".md": "markdown",
+    # ".md": "markdown", # https://github.com/ikatyang/tree-sitter-markdown/issues/59
     ".m": "objc",
     ".ml": "ocaml",
     ".pl": "perl",
