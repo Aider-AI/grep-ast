@@ -105,6 +105,7 @@ class TreeContext:
         margin=3,
         mark_lois=True,
         header_max=10,
+        show_top_of_file_parent_scope=True,
         loi_pad=1,
     ):
         self.filename = filename
@@ -116,6 +117,7 @@ class TreeContext:
         self.mark_lois = mark_lois
         self.header_max = header_max
         self.loi_pad = loi_pad
+        self.show_top_of_file_parent_scope = show_top_of_file_parent_scope
 
         self.parent_context = parent_context
         self.child_context = child_context
@@ -325,7 +327,8 @@ class TreeContext:
 
         for line_num in self.scopes[i]:
             head_start, head_end = self.header[line_num]
-            self.show_lines.update(range(head_start, head_end))
+            if head_start > 0 or self.show_top_of_file_parent_scope:
+                self.show_lines.update(range(head_start, head_end))
 
             if self.last_line:
                 last_line = self.get_last_line_of_scope(line_num)
