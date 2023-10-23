@@ -7,6 +7,7 @@ PARSERS = {
     ".go": "go",
     ".bash": "bash",
     ".c": "c",
+    ".cc": "cpp",
     ".cs": "c-sharp",
     ".cl": "commonlisp",
     ".cpp": "cpp",
