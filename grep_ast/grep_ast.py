@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import pathspec
 import argparse
 import os
 import re
@@ -52,7 +53,6 @@ def main():
         process_filename(fname, args)
 
 
-import pathspec
 
 def enumerate_files(fnames, spec):
     for fname in fnames:
