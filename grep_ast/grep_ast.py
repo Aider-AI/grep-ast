@@ -25,6 +25,7 @@ def main():
     parser.add_argument(
         "--no-color", action="store_false", help="disable color printing", dest="color"
     )
+    parser.add_argument("--no-gitignore", action="store_true", help="ignore .gitignore file")
     parser.add_argument("--verbose", action="store_true", help="enable verbose output")
     parser.add_argument("-n", "--line-number", action="store_true", help="display line numbers")
     args = parser.parse_args()
@@ -43,11 +44,12 @@ def main():
         return 1
 
     gitignore = None
-    for parent in Path("./xxx").resolve().parents:
-        potential_gitignore = parent / ".gitignore"
-        if potential_gitignore.exists():
-            gitignore = potential_gitignore
-            break
+    if not args.no_gitignore:
+        for parent in Path("./xxx").resolve().parents:
+            potential_gitignore = parent / ".gitignore"
+            if potential_gitignore.exists():
+                gitignore = potential_gitignore
+                break
 
     if gitignore:
         with gitignore.open() as f:
