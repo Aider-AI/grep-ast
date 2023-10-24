@@ -45,12 +45,21 @@ def main():
         process_filename(fname, args)
 
 
+import pathspec
+
 def enumerate_files(fnames):
+    gitignore = Path('.gitignore')
+    if gitignore.exists():
+        with gitignore.open() as f:
+            spec = pathspec.PathSpec.from_lines('gitwildmatch', f)
+    else:
+        spec = pathspec.PathSpec.from_lines('gitwildmatch', [])
+
     for fname in fnames:
         fname = Path(fname)
 
         # oddly, Path('.').name == "" so we will recurse it
-        if fname.name.startswith("."):
+        if fname.name.startswith(".") or spec.match_file(fname):
             continue
 
         if fname.is_file():
