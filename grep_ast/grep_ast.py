@@ -41,13 +41,6 @@ def main():
         print("Please provide a pattern to search for")
         return 1
 
-    for fname in enumerate_files(args.filenames):
-        process_filename(fname, args)
-
-
-import pathspec
-
-def enumerate_files(fnames):
     gitignore = Path('.gitignore')
     if gitignore.exists():
         with gitignore.open() as f:
@@ -55,6 +48,13 @@ def enumerate_files(fnames):
     else:
         spec = pathspec.PathSpec.from_lines('gitwildmatch', [])
 
+    for fname in enumerate_files(args.filenames, spec):
+        process_filename(fname, args)
+
+
+import pathspec
+
+def enumerate_files(fnames, spec):
     for fname in fnames:
         fname = Path(fname)
 
@@ -67,7 +67,7 @@ def enumerate_files(fnames):
             continue
 
         if fname.is_dir():
-            for sub_fnames in enumerate_files(fname.iterdir()):
+            for sub_fnames in enumerate_files(fname.iterdir(), spec):
                 yield sub_fnames
 
 
