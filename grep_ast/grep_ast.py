@@ -42,8 +42,14 @@ def main():
         print("Please provide a pattern to search for")
         return 1
 
-    gitignore = Path('.gitignore')
-    if gitignore.exists():
+    gitignore = None
+    for parent in Path('.').resolve().parents:
+        potential_gitignore = parent / '.gitignore'
+        if potential_gitignore.exists():
+            gitignore = potential_gitignore
+            break
+
+    if gitignore:
         with gitignore.open() as f:
             spec = pathspec.PathSpec.from_lines('gitwildmatch', f)
     else:
