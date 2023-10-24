@@ -20,7 +20,8 @@ setup(
     install_requires=requirements,
     entry_points={
         "console_scripts": [
-            "grep-ast=grep_ast.grep_ast:main",
+            "grep-ast=grep_ast.main:main",
+            "gast=grep_ast.main:main",
         ],
     },
 )
