@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
-import pathspec
 import argparse
 import os
 import re
 import sys
 from pathlib import Path
 
+import pathspec
 from tree_sitter_languages import get_parser
 
 from .dump import dump  # noqa: F401
@@ -43,21 +43,20 @@ def main():
         return 1
 
     gitignore = None
-    for parent in Path('.').resolve().parents:
-        potential_gitignore = parent / '.gitignore'
+    for parent in Path("./xxx").resolve().parents:
+        potential_gitignore = parent / ".gitignore"
         if potential_gitignore.exists():
             gitignore = potential_gitignore
             break
 
     if gitignore:
         with gitignore.open() as f:
-            spec = pathspec.PathSpec.from_lines('gitwildmatch', f)
+            spec = pathspec.PathSpec.from_lines("gitwildmatch", f)
     else:
-        spec = pathspec.PathSpec.from_lines('gitwildmatch', [])
+        spec = pathspec.PathSpec.from_lines("gitwildmatch", [])
 
     for fname in enumerate_files(args.filenames, spec):
         process_filename(fname, args)
-
 
 
 def enumerate_files(fnames, spec):
