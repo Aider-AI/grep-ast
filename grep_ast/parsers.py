@@ -8,7 +8,7 @@ PARSERS = {
     ".bash": "bash",
     ".c": "c",
     ".cc": "cpp",
-    ".cs": "c-sharp",
+    ".cs": "c_sharp",
     ".cl": "commonlisp",
     ".cpp": "cpp",
     ".css": "css",
