@@ -38,6 +38,7 @@ PARSERS = {
     ".php": "php",
     ".ql": "ql",
     ".r": "r",
+    ".R": "r",
     ".regex": "regex",
     ".rst": "rst",
     ".rb": "ruby",
