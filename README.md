@@ -8,7 +8,7 @@ Get a sense of what's inside a matched class or function definition.
 You see relevant code from every layer of the
 abstract syntax tree, above and below the matches.
 
-By default, grep-AST recurses the current directory to find all source code files.
+By default, grep-AST recurses the current directory to search all source code files.
 It respects `.gitignore`, so it will usually "do the right thing" in most repos
 if just you do `grep-ast <regex>` without specifying any filenames.
 
