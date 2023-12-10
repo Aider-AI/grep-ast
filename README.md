@@ -54,10 +54,15 @@ options:
 
 ## Examples
 
-Here we search for **"encoding"** in the source to this tool:
+Here we search for **"encoding"** in the source to this tool.
+These results mainly highlight how `grep-ast`
+shows you how the matches fit into the code base.
 
 <img src="assets/screenshot-encoding.svg" alt="aider screencast">
 
-Here we search for **"TreeContext"** in the source to this tool:
+Here we search for **"TreeContext"** in the source to this tool.
+These results mainly highlight how `grep-ast`
+helps you understand the *contents* of a matching
+named code block (class, function, method, etc).
 
 <img src="assets/screenshot-TreeContext.svg" alt="aider screencast">
