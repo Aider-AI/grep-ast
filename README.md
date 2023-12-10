@@ -12,6 +12,8 @@ By default, grep-AST recurses the current directory to search all source code fi
 It respects `.gitignore`, so it will usually "do the right thing" in most repos
 if you just do `grep-ast <regex>` without specifying any filenames.
 
+You can also invoke `grep-ast` as `gast` for convenience.
+
 Grep-AST is built with [tree-sitter](https://tree-sitter.github.io/tree-sitter/) and
 [tree-sitter-languages](https://github.com/grantjenks/py-tree-sitter-languages).
 So it supports a lot of popular [code languages](https://github.com/paul-gauthier/grep-ast/blob/main/grep_ast/parsers.py).
