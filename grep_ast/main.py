@@ -60,12 +60,12 @@ def main():
         process_filename(fname, args)
 
 
-def enumerate_files(fnames, spec):
+def enumerate_files(fnames, spec, use_spec=False):
     for fname in fnames:
         fname = Path(fname)
 
         # oddly, Path('.').name == "" so we will recurse it
-        if fname.name.startswith(".") or spec.match_file(fname):
+        if fname.name.startswith(".") or use_spec and spec.match_file(fname):
             continue
 
         if fname.is_file():
@@ -73,7 +73,7 @@ def enumerate_files(fnames, spec):
             continue
 
         if fname.is_dir():
-            for sub_fnames in enumerate_files(fname.iterdir(), spec):
+            for sub_fnames in enumerate_files(fname.iterdir(), spec, True):
                 yield sub_fnames
 
 
