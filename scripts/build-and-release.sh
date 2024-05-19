@@ -1,5 +1,9 @@
 #!/bin/bash
 
+##
+## Bump the version in setup.py first
+##
+
 # exit when any command fails
 set -e
 

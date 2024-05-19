@@ -117,8 +117,13 @@ class TreeContext:
         if self.loi_pad:
             for line in list(self.show_lines):
                 for new_line in range(line - self.loi_pad, line + self.loi_pad + 1):
-                    if self.scopes[line].intersection(self.scopes[new_line]):
-                        self.show_lines.add(new_line)
+                    if not self.scopes[line].intersection(self.scopes[new_line]):
+                        continue
+                    if new_line >= self.num_lines:
+                        continue
+                    if new_line < 0:
+                        continue
+                    self.show_lines.add(new_line)
 
         if self.last_line:
             # add the bottom line (plus parent context)
