@@ -247,6 +247,9 @@ class TreeContext:
             return
         self.done_parent_scopes.add(i)
 
+        if i >= len(self.scopes):
+            return
+
         for line_num in self.scopes[i]:
             head_start, head_end = self.header[line_num]
             if head_start > 0 or self.show_top_of_file_parent_scope:
