@@ -47,6 +47,7 @@ PARSERS = {
     ".scala": "scala",
     ".sql": "sql",
     ".sqlite": "sqlite",
+    ".sw": "sway",
     ".toml": "toml",
     ".tsq": "tsq",
     ".tsx": "typescript",
