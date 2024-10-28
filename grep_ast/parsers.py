@@ -13,6 +13,7 @@ PARSERS = {
     ".cl": "commonlisp",
     ".cpp": "cpp",
     ".css": "css",
+    ".d": "d",
     # ".dart": "dart", # py-tree-sitter-languages does not support Dart
     ".dockerfile": "dockerfile",
     ".dot": "dot",
