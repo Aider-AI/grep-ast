@@ -1,2 +1,2 @@
-tree-sitter-languages>=1.8.0
+tree-sitter-languages-freed-wu-pr>=1.11.0
 pathspec

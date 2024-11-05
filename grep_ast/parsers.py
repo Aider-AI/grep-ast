@@ -13,6 +13,7 @@ PARSERS = {
     ".cl": "commonlisp",
     ".cpp": "cpp",
     ".css": "css",
+    ".d": "d",
     ".dockerfile": "dockerfile",
     ".dot": "dot",
     ".el": "elisp",
