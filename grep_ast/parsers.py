@@ -4,7 +4,7 @@ import os
 PARSERS = {
     ".py": "python",
     ".js": "javascript",
-    ".mjs": "javascript", # mjs file extension stands for "module JavaScript."
+    ".mjs": "javascript",  # mjs file extension stands for "module JavaScript."
     ".go": "go",
     ".bash": "bash",
     ".c": "c",
@@ -13,6 +13,7 @@ PARSERS = {
     ".cl": "commonlisp",
     ".cpp": "cpp",
     ".css": "css",
+    ".dart": "dart",
     ".dockerfile": "dockerfile",
     ".dot": "dot",
     ".el": "elisp",
