@@ -48,10 +48,11 @@ PARSERS = {
     ".scala": "scala",
     ".sql": "sql",
     ".sqlite": "sqlite",
+    ".sw": "sway",  # https://github.com/FuelLabs/tree-sitter-sway
     ".toml": "toml",
     ".tsq": "tsq",
-    ".tsx": "typescript",
     ".ts": "typescript",
+    ".tsx": "typescript",
     ".yaml": "yaml",
 }
 
