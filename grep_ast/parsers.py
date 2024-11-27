@@ -9,7 +9,7 @@ PARSERS = {
     ".bash": "bash",
     ".c": "c",
     ".cc": "cpp",
-    ".cs": "c_sharp",
+    ".cs": "csharp",
     ".cl": "commonlisp",
     ".cpp": "cpp",
     ".css": "css",
@@ -35,7 +35,7 @@ PARSERS = {
     ".mk": "make",
     # ".md": "markdown", # https://github.com/ikatyang/tree-sitter-markdown/issues/59
     ".m": "objc",
-    ".ml": "ocaml",
+    # ".ml": "ocaml",
     ".pl": "perl",
     ".php": "php",
     ".ql": "ql",
