@@ -2,7 +2,7 @@
 
 import re
 
-from tree_sitter_languages import get_parser
+from tree_sitter_languages_freed_wu_pr import get_parser
 
 from .dump import dump  # noqa: F401
 from .parsers import filename_to_lang
