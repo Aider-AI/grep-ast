@@ -53,6 +53,9 @@ PARSERS = {
     ".tsx": "typescript",
     ".ts": "typescript",
     ".yaml": "yaml",
+    ".clj": "clojure",
+    ".cljs": "clojure",
+    ".cljc": "clojure",
 }
 
 
