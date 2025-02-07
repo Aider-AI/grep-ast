@@ -1,5 +1,7 @@
 import os
 
+from .tsl import USING_TSL_PACK
+
 # Updated mapping of file extensions to parsers
 PARSERS = {
     ".py": "python",
@@ -9,7 +11,7 @@ PARSERS = {
     ".bash": "bash",
     ".c": "c",
     ".cc": "cpp",
-    ".cs": "csharp",
+    ".cs": "c_sharp",
     ".cl": "commonlisp",
     ".cpp": "cpp",
     ".css": "css",
@@ -35,7 +37,7 @@ PARSERS = {
     ".mk": "make",
     # ".md": "markdown", # https://github.com/ikatyang/tree-sitter-markdown/issues/59
     ".m": "objc",
-    # ".ml": "ocaml",
+    ".ml": "ocaml",
     ".pl": "perl",
     ".php": "php",
     ".ql": "ql",
@@ -55,6 +57,10 @@ PARSERS = {
     ".ts": "typescript",
     ".yaml": "yaml",
 }
+
+if USING_TSL_PACK:
+    del PARSERS[".ml"]
+    PARSERS[".cs"] = "csharp"
 
 
 def filename_to_lang(filename):
