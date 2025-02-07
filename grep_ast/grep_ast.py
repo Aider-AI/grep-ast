@@ -2,10 +2,9 @@
 
 import re
 
-from tree_sitter_language_pack import get_parser
-
 from .dump import dump  # noqa: F401
 from .parsers import filename_to_lang
+from .tsl import get_parser
 
 
 class TreeContext:
