@@ -234,7 +234,7 @@ class TreeContext:
 
             line_output = f"{spacer}{self.output_lines.get(i, line)}"
             if self.line_number:
-                line_output = f"{i+1:3}" + line_output
+                line_output = f"{i + 1: 3}" + line_output
             output += line_output + "\n"
 
             dots = True
@@ -277,7 +277,7 @@ class TreeContext:
             print(
                 "   " * depth,
                 node.type,
-                f"{start_line}-{end_line}={size+1}",
+                f"{start_line}-{end_line}={size + 1}",
                 node.text.splitlines()[0],
                 self.lines[start_line],
             )
