@@ -60,6 +60,7 @@ PARSERS = {
 
 if USING_TSL_PACK:
     del PARSERS[".ml"]
+    del PARSERS[".ql"]
     PARSERS[".cs"] = "csharp"
 
 
