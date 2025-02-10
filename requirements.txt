@@ -1,2 +1,3 @@
 tree-sitter-languages>=1.8.0
+tree-sitter==0.21.3
 pathspec
