@@ -1,6 +1,6 @@
 # grep-ast
 
-Grep soure code files and see matching lines with
+Grep source code files and see matching lines with
 useful context that show how they fit into the code.
 See the loops, functions, methods, classes, etc
 that contain all the matching lines.

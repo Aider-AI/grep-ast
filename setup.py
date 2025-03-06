@@ -24,4 +24,7 @@ setup(
             "gast=grep_ast.main:main",
         ],
     },
+    classifiers=[
+        "License :: OSI Approved :: Apache Software License"
+    ],
 )
