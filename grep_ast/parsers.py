@@ -15,7 +15,6 @@ PARSERS = {
     ".cl": "commonlisp",
     ".cpp": "cpp",
     ".css": "css",
-    # ".dart": "dart", # py-tree-sitter-languages does not support Dart
     ".dockerfile": "dockerfile",
     ".dot": "dot",
     ".el": "elisp",
@@ -35,7 +34,7 @@ PARSERS = {
     ".kt": "kotlin",
     ".lua": "lua",
     ".mk": "make",
-    # ".md": "markdown", # https://github.com/ikatyang/tree-sitter-markdown/issues/59
+    ".md": "markdown",  # https://github.com/ikatyang/tree-sitter-markdown/issues/59
     ".m": "objc",
     ".ml": "ocaml",
     ".pl": "perl",
