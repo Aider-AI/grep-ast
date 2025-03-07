@@ -94,7 +94,7 @@ class TreeContext:
                 if self.color:
                     highlighted_line = re.sub(
                         pat,
-                        lambda match: f"\033[1;31m{match.group()}\033[0m",
+                        lambda match: f"\033[1;31m{match.group()}\033[0m",  # noqa
                         line,
                         flags=re.IGNORECASE if ignore_case else 0,
                     )
@@ -221,7 +221,7 @@ class TreeContext:
                     if self.line_number:
                         output += "...⋮...\n"
                     else:
-                        output += "⋮...\n"
+                        output += "⋮\n"
                     dots = False
                 continue
 
