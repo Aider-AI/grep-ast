@@ -244,7 +244,7 @@ if USING_TSL_PACK:
         # S
         ".scala": "scala",
         ".sc": "scala",
-        ".scm": "scheme",
+        ".scm": "scheme",  # .scm is primarily used for Scheme files
         ".ss": "scheme",
         ".scss": "scss",
         ".smali": "smali",
