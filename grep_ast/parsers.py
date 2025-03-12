@@ -272,9 +272,11 @@ if USING_TSL_PACK:
         ".ungram": "ungrammar",
         ".tal": "uxntal",
         # V
-        ".v": "v",
+        # Note: .v extension is used by both V language and Verilog
+        # Prioritizing Verilog as it's more commonly used
         ".sv": "verilog",
         ".v": "verilog",
+        # For V language, users may need to specify parser manually
         ".vhd": "vhdl",
         ".vhdl": "vhdl",
         ".vim": "vim",
