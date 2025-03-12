@@ -229,7 +229,7 @@ if USING_TSL_PACK:
         # Q
         "qmldir": "qmldir",
         ".qml": "qmljs",
-        ".scm": "query",
+        # Q
         # R
         ".r": "r",
         ".R": "r",
