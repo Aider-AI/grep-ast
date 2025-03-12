@@ -192,7 +192,7 @@ if USING_TSL_PACK:
         ".mk": "make",
         ".md": "markdown",
         ".markdown": "markdown",
-        ".m": "matlab",
+        ".m": "matlab",  # Note: .m is used by both MATLAB and Objective-C, prioritizing MATLAB here
         ".mat": "matlab",
         ".mermaid": "mermaid",
         "meson.build": "meson",
@@ -201,7 +201,7 @@ if USING_TSL_PACK:
         ".nix": "nix",
         ".nqc": "nqc",
         # O
-        ".m": "objc",
+        # .m extension is handled under MATLAB section (dual use extension)
         ".mm": "objc",
         ".odin": "odin",
         ".org": "org",
