@@ -55,6 +55,9 @@ PARSERS = {
     ".tsx": "typescript",
     ".ts": "typescript",
     ".yaml": "yaml",
+    ".clj": "clojure",
+    ".cljs": "clojure",
+    ".cljc": "clojure",
 }
 
 if USING_TSL_PACK:

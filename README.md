@@ -24,7 +24,17 @@ So it supports a lot of popular [code languages](https://github.com/paul-gauthie
 python -m pip install git+https://github.com/paul-gauthier/grep-ast.git
 ```
 
-## Usage
+## Adding Support for New Languages
+
+To add support for a new language, you need to update the `PARSERS` dictionary in `grep_ast/parsers.py` with the appropriate file extensions and language name as recognized by `tree-sitter`. For example, to add support for Clojure, you would add:
+
+```python
+".clj": "clojure",
+".cljs": "clojure",
+".cljc": "clojure",
+```
+
+Ensure that the language is supported by `tree-sitter` and `py-tree-sitter-languages`. You may need to install additional language parsers if they are not included by default.
 
 Basic usage:
 
