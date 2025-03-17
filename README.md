@@ -52,6 +52,57 @@ options:
   --verbose            enable verbose output
 ```
 
+## Using via Docker Image
+
+### Building the Docker Image
+
+You can build the Docker image for this project by running the following command:
+
+```bash
+python setup.py build_docker
+```
+
+OR directly from root project directory:
+
+```bash
+docker build --file docker/Dockerfile -t grep-ast-image .
+```
+
+### Calling grep-ast from Docker image
+
+To grep from current working directory we mount it to docker to give access so paths will work also inside docker, example:
+
+```
+docker run -it -v "$(pwd)":/app:ro grep-ast-image str grep_ast/*.py
+```
+
+### Using Docker image for pytest tests!
+
+To ensure reproducible testing and ease of debugging, you can run pytest tests inside the Docker image. This is particularly useful when collaborating in an open-source manner.
+
+You can use this docker image e.g. to run pytest:
+
+```bash
+python setup.py docker_test
+```
+
+OR directly:
+
+```
+docker run -it --entrypoint bash grep-ast-image -c 'cd /grep-ast; pwd; pytest'
+```
+
+This command will build the Docker image and execute pytest tests inside it.
+
+### If you want to debug Docker image itself
+
+If you want to execute commands inside docker image, overwrite entrypoint with bash and give it commands you want, examples:
+
+```bash
+$ docker run -it -v "$(pwd)":/app:ro --entrypoint bash grep-ast-image -c 'cd /app; pwd; ls'
+$ docker run -it --entrypoint bash grep-ast-image -c 'cd /grep-ast; pwd; ls'
+```
+
 ## Examples
 
 Here we search for **"encoding"** in the source to this tool.
