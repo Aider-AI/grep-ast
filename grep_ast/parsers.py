@@ -65,6 +65,7 @@ if USING_TSL_PACK:
         ".adb": "ada",
         ".ads": "ada",
         ".agda": "agda",
+        ".apex": "apex",
         ".ino": "arduino",
         ".asm": "asm",
         ".s": "asm",
@@ -262,6 +263,7 @@ if USING_TSL_PACK:
         ".tcl": "tcl",
         ".thrift": "thrift",
         ".toml": "toml",
+        ".trigger": "apex",
         ".tsv": "tsv",
         ".tsx": "typescript",
         ".twig": "twig",
@@ -301,7 +303,13 @@ def filename_to_lang(filename):
     basename = os.path.basename(filename)
     if basename in PARSERS:
         return PARSERS[basename]
-
-    # If not found by full filename, check by extension
+    
     file_extension = os.path.splitext(filename)[1]
+
+    if file_extension == ".cls":
+        meta = filename + "-meta.xml"
+        is_in_classes_dir = 'classes' in filename
+        if is_in_classes_dir or os.path.exists(meta):
+            return "apex"
+    # If not found by full filename, check by extension
     return PARSERS.get(file_extension)
