@@ -37,6 +37,7 @@ PARSERS = {
     ".md": "markdown",  # https://github.com/ikatyang/tree-sitter-markdown/issues/59
     ".m": "objc",
     ".ml": "ocaml",
+    ".mli": "ocaml_interface",
     ".pl": "perl",
     ".php": "php",
     ".ql": "ql",
@@ -203,6 +204,8 @@ if USING_TSL_PACK:
         # O
         # .m extension is handled under MATLAB section (dual use extension)
         ".mm": "objc",
+        ".ml": "ocaml",
+        ".mli": "ocaml_interface",
         ".odin": "odin",
         ".org": "org",
         # P
